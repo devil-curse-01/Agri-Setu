@@ -106,6 +106,38 @@
                 gap: 12px;
             }
 
+            /* ── LANG TOGGLE ── */
+            .lang-toggle {
+                display: flex;
+                align-items: center;
+                gap: 0;
+                border: 1.5px solid var(--border);
+                border-radius: 30px;
+                overflow: hidden;
+                background: var(--surface);
+            }
+            .lang-btn {
+                padding: 6px 14px;
+                font-size: 0.78rem;
+                font-weight: 600;
+                border: none;
+                background: transparent;
+                cursor: pointer;
+                color: var(--ink-soft);
+                font-family: "DM Sans", sans-serif;
+                transition: all 0.2s;
+                letter-spacing: 0.3px;
+            }
+            .lang-btn.active {
+                background: var(--green);
+                color: #fff;
+                border-radius: 28px;
+            }
+            .lang-btn:not(.active):hover {
+                color: var(--green);
+                background: var(--green-ultra);
+            }
+
             /* ── PAGE SYSTEM ── */
             .page {
                 display: none;
@@ -696,6 +728,226 @@
                 animation: cardIn 0.45s ease both;
             }
 
+            /* HOW TO APPLY BUTTON */
+            .btn-how {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: var(--green);
+                color: #fff;
+                font-family: "DM Sans", sans-serif;
+                font-size: 0.84rem;
+                font-weight: 600;
+                padding: 10px 20px;
+                border-radius: 30px;
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .btn-how:hover {
+                background: #1e5c3e;
+                transform: translateY(-1px);
+                box-shadow: 0 6px 20px rgba(45, 106, 79, 0.3);
+            }
+
+            /* MODAL */
+            .modal-overlay {
+                position: fixed;
+                inset: 0;
+                z-index: 999;
+                background: rgba(13, 31, 18, 0.55);
+                backdrop-filter: blur(6px);
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+            }
+            .modal-overlay.open {
+                opacity: 1;
+                pointer-events: all;
+            }
+            .modal {
+                background: var(--surface);
+                border-radius: 28px 28px 0 0;
+                width: 100%;
+                max-width: 680px;
+                max-height: 88vh;
+                display: flex;
+                flex-direction: column;
+                transform: translateY(100%);
+                transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                box-shadow: 0 -8px 60px rgba(0, 0, 0, 0.18);
+            }
+            .modal-overlay.open .modal {
+                transform: translateY(0);
+            }
+            .modal-handle {
+                width: 44px;
+                height: 4px;
+                border-radius: 4px;
+                background: var(--border);
+                margin: 14px auto 0;
+                flex-shrink: 0;
+            }
+            .modal-head {
+                padding: 18px 28px 16px;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 16px;
+                flex-shrink: 0;
+            }
+            .modal-scheme-name {
+                font-family: "Lora", serif;
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: var(--ink);
+                line-height: 1.3;
+            }
+            .modal-subtitle {
+                font-size: 0.78rem;
+                color: var(--ink-soft);
+                margin-top: 4px;
+            }
+            .modal-close {
+                background: var(--bg);
+                border: 1.5px solid var(--border);
+                border-radius: 50%;
+                width: 34px;
+                height: 34px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 1rem;
+                color: var(--ink-soft);
+                flex-shrink: 0;
+                transition: all 0.2s;
+                margin-top: 2px;
+                font-family: sans-serif;
+            }
+            .modal-close:hover {
+                background: var(--green-pale);
+                color: var(--green);
+                border-color: var(--green);
+            }
+            .modal-body {
+                padding: 24px 28px 28px;
+                overflow-y: auto;
+                flex: 1;
+            }
+            .modal-loading {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 16px;
+                padding: 48px 0;
+            }
+            .modal-spin {
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                border: 3px solid var(--green-pale);
+                border-top-color: var(--green);
+                animation: rotate 0.75s linear infinite;
+            }
+            .modal-spin-txt {
+                font-size: 0.88rem;
+                color: var(--ink-soft);
+            }
+            .steps-list {
+                display: flex;
+                flex-direction: column;
+            }
+            .step-item {
+                display: flex;
+                gap: 16px;
+                position: relative;
+                animation: fadeUp 0.4s ease both;
+            }
+            .step-item:not(:last-child)::after {
+                content: "";
+                position: absolute;
+                left: 17px;
+                top: 38px;
+                bottom: -2px;
+                width: 2px;
+                background: var(--green-pale);
+            }
+            .step-num {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background: var(--green);
+                color: #fff;
+                font-size: 0.82rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                margin-top: 2px;
+                position: relative;
+                z-index: 1;
+            }
+            .step-content {
+                padding-bottom: 22px;
+                flex: 1;
+            }
+            .step-title {
+                font-size: 0.95rem;
+                font-weight: 600;
+                color: var(--ink);
+                margin-bottom: 5px;
+            }
+            .step-desc {
+                font-size: 0.88rem;
+                color: var(--ink-soft);
+                line-height: 1.65;
+            }
+            .modal-tip {
+                margin-top: 4px;
+                padding: 14px 16px;
+                background: var(--green-ultra);
+                border-radius: 14px;
+                border: 1px solid var(--green-pale);
+                font-size: 0.85rem;
+                color: var(--ink-mid);
+                line-height: 1.6;
+            }
+            .modal-tip strong {
+                color: var(--green);
+            }
+            .modal-foot {
+                padding: 14px 28px 20px;
+                border-top: 1px solid var(--border);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                flex-shrink: 0;
+                flex-wrap: wrap;
+            }
+            .modal-foot-note {
+                font-size: 0.78rem;
+                color: var(--ink-soft);
+            }
+            .modal-error {
+                text-align: center;
+                padding: 40px 20px;
+                color: var(--ink-soft);
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+            .modal-error-icon {
+                font-size: 2.5rem;
+                margin-bottom: 12px;
+            }
+
             /* Responsive */
             @media (max-width: 600px) {
                 .nav {
@@ -725,6 +977,12 @@
                 .metric-div {
                     display: none;
                 }
+                .modal-head,
+                .modal-body,
+                .modal-foot {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                }
             }
         </style>
     </head>
@@ -733,14 +991,26 @@
         <nav class="nav">
             <div class="nav-brand"><span>🌾</span> Agri Setu</div>
             <div class="nav-right">
-                <span class="nav-chip">Telangana</span>
+                <span class="nav-chip" data-i18n="navChip">Telangana</span>
+                <div class="lang-toggle">
+                    <button
+                        class="lang-btn active"
+                        id="btnEn"
+                        onclick="setLang('en')"
+                    >
+                        EN
+                    </button>
+                    <button class="lang-btn" id="btnHi" onclick="setLang('hi')">
+                        हिंदी
+                    </button>
+                </div>
                 <button
                     class="nav-back"
                     id="btnBack"
                     style="display: none"
                     onclick="goBack()"
                 >
-                    ← Back
+                    <span data-i18n="back">← Back</span>
                 </button>
             </div>
         </nav>
@@ -750,18 +1020,21 @@
             <div class="intro-wrap">
                 <div class="intro-blob blob-a"></div>
                 <div class="intro-blob blob-b"></div>
-                <div class="intro-pill">🌱 Telangana Scheme Finder</div>
+                <div class="intro-pill">
+                    🌱
+                    <span data-i18n="introPill">Telangana Scheme Finder</span>
+                </div>
                 <h1 class="intro-h1"><i>Agri</i> Setu</h1>
-                <p class="intro-sub">
+                <p class="intro-sub" data-i18n="introSub">
                     Connecting Telangana Farmers to the Right Government Schemes
                 </p>
-                <p class="intro-desc">
+                <p class="intro-desc" data-i18n="introDesc">
                     Answer a few simple questions about your farm, land size,
                     and needs — we instantly match you with every government
                     scheme you're eligible for, completely free of charge.
                 </p>
                 <button class="btn-cta" onclick="showPage('form')">
-                    Get Started
+                    <span data-i18n="introBtn">Get Started</span>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                         <path
                             d="M3 8h10M9 4l4 4-4 4"
@@ -775,17 +1048,25 @@
                 <div class="intro-metrics">
                     <div class="metric">
                         <div class="metric-val">50+</div>
-                        <div class="metric-lbl">Active Schemes</div>
+                        <div class="metric-lbl" data-i18n="metricSchemes">
+                            Active Schemes
+                        </div>
                     </div>
                     <div class="metric-div"></div>
                     <div class="metric">
                         <div class="metric-val">33</div>
-                        <div class="metric-lbl">Districts Covered</div>
+                        <div class="metric-lbl" data-i18n="metricDistricts">
+                            Districts Covered
+                        </div>
                     </div>
                     <div class="metric-div"></div>
                     <div class="metric">
-                        <div class="metric-val">Free</div>
-                        <div class="metric-lbl">No Cost Service</div>
+                        <div class="metric-val" data-i18n="metricFreeVal">
+                            Free
+                        </div>
+                        <div class="metric-lbl" data-i18n="metricFree">
+                            No Cost Service
+                        </div>
                     </div>
                 </div>
             </div>
@@ -794,8 +1075,10 @@
         <!-- ── FORM PAGE ── -->
         <div id="pageForm" class="page">
             <div class="form-wrap">
-                <h2 class="form-heading">Tell us about your farm</h2>
-                <p class="form-subheading">
+                <h2 class="form-heading" data-i18n="formHeading">
+                    Tell us about your farm
+                </h2>
+                <p class="form-subheading" data-i18n="formSubheading">
                     Fill in your details to instantly discover schemes you're
                     eligible for.
                 </p>
@@ -803,11 +1086,15 @@
                 <div class="form-card">
                     <!-- Personal Info -->
                     <div class="fsec">
-                        <div class="fsec-title">Personal Information</div>
+                        <div class="fsec-title" data-i18n="secPersonal">
+                            Personal Information
+                        </div>
                         <div class="fgrid">
                             <div class="ffield">
                                 <label class="flabel"
-                                    >Farmer Name
+                                    ><span data-i18n="labelName"
+                                        >Farmer Name</span
+                                    >
                                     <span class="flabel-req">*</span></label
                                 >
                                 <input
@@ -815,12 +1102,15 @@
                                     id="fName"
                                     type="text"
                                     placeholder="Your full name"
+                                    data-i18n-placeholder="placeholderName"
                                     oninput="checkValid()"
                                 />
                             </div>
                             <div class="ffield">
                                 <label class="flabel"
-                                    >District
+                                    ><span data-i18n="labelDistrict"
+                                        >District</span
+                                    >
                                     <span class="flabel-req">*</span></label
                                 >
                                 <select
@@ -828,7 +1118,10 @@
                                     id="fDistrict"
                                     onchange="checkValid()"
                                 >
-                                    <option value="">
+                                    <option
+                                        value=""
+                                        data-i18n="optSelectDistrict"
+                                    >
                                         Select your district
                                     </option>
                                     <option>Adilabad</option>
@@ -868,7 +1161,9 @@
                             </div>
                             <div class="ffield">
                                 <label class="flabel"
-                                    >Caste Category
+                                    ><span data-i18n="labelCaste"
+                                        >Caste Category</span
+                                    >
                                     <span class="flabel-req">*</span></label
                                 >
                                 <select
@@ -876,7 +1171,7 @@
                                     id="fCaste"
                                     onchange="checkValid()"
                                 >
-                                    <option value="">
+                                    <option value="" data-i18n="optSelectCaste">
                                         Select caste category
                                     </option>
                                     <optgroup label="Scheduled">
@@ -922,11 +1217,15 @@
 
                     <!-- Land & Crop -->
                     <div class="fsec">
-                        <div class="fsec-title">Land & Crop Details</div>
+                        <div class="fsec-title" data-i18n="secLand">
+                            Land & Crop Details
+                        </div>
                         <div class="fgrid">
                             <div class="ffield">
                                 <label class="flabel"
-                                    >Land Size (acres)
+                                    ><span data-i18n="labelLand"
+                                        >Land Size (acres)</span
+                                    >
                                     <span class="flabel-req">*</span></label
                                 >
                                 <input
@@ -936,12 +1235,15 @@
                                     min="0"
                                     step="0.5"
                                     placeholder="e.g. 2.5"
+                                    data-i18n-placeholder="placeholderLand"
                                     oninput="checkValid()"
                                 />
                             </div>
                             <div class="ffield">
                                 <label class="flabel"
-                                    >Crop Type
+                                    ><span data-i18n="labelCrop"
+                                        >Crop Type</span
+                                    >
                                     <span class="flabel-req">*</span></label
                                 >
                                 <select
@@ -949,7 +1251,9 @@
                                     id="fCrop"
                                     onchange="checkValid()"
                                 >
-                                    <option value="">Select your crop</option>
+                                    <option value="" data-i18n="optSelectCrop">
+                                        Select your crop
+                                    </option>
                                     <optgroup label="Cereals & Millets">
                                         <option>Rice (Paddy)</option>
                                         <option>Maize (Corn)</option>
@@ -1021,7 +1325,7 @@
                     <!-- Farmer Category -->
                     <div class="fsec">
                         <div class="fsec-title">
-                            Farmer Category
+                            <span data-i18n="secCategory">Farmer Category</span>
                             <span class="flabel-req" style="font-size: 0.7rem"
                                 >*</span
                             >
@@ -1030,30 +1334,35 @@
                             <button
                                 class="fpill"
                                 onclick="selectPill('category',this,'Small')"
+                                data-i18n="pillSmall"
                             >
                                 Small
                             </button>
                             <button
                                 class="fpill"
                                 onclick="selectPill('category',this,'Marginal')"
+                                data-i18n="pillMarginal"
                             >
                                 Marginal
                             </button>
                             <button
                                 class="fpill"
                                 onclick="selectPill('category',this,'Tribal')"
+                                data-i18n="pillTribal"
                             >
                                 Tribal
                             </button>
                             <button
                                 class="fpill"
                                 onclick="selectPill('category',this,'Landless')"
+                                data-i18n="pillLandless"
                             >
                                 Landless
                             </button>
                             <button
                                 class="fpill"
                                 onclick="selectPill('category',this,'General')"
+                                data-i18n="pillGeneral"
                             >
                                 General
                             </button>
@@ -1064,7 +1373,7 @@
                     <!-- Ownership -->
                     <div class="fsec">
                         <div class="fsec-title">
-                            Land Ownership
+                            <span data-i18n="secOwnership">Land Ownership</span>
                             <span class="flabel-req" style="font-size: 0.7rem"
                                 >*</span
                             >
@@ -1073,12 +1382,14 @@
                             <button
                                 class="fpill"
                                 onclick="selectPill('ownership',this,'Owner')"
+                                data-i18n="pillOwner"
                             >
                                 Owner
                             </button>
                             <button
                                 class="fpill"
                                 onclick="selectPill('ownership',this,'Tenant')"
+                                data-i18n="pillTenant"
                             >
                                 Tenant
                             </button>
@@ -1088,11 +1399,15 @@
 
                     <!-- Soil & Water -->
                     <div class="fsec">
-                        <div class="fsec-title">Soil & Water Details</div>
+                        <div class="fsec-title" data-i18n="secSoil">
+                            Soil & Water Details
+                        </div>
                         <div class="fgrid">
                             <div class="ffield">
                                 <label class="flabel"
-                                    >Soil Type
+                                    ><span data-i18n="labelSoil"
+                                        >Soil Type</span
+                                    >
                                     <span class="flabel-req">*</span></label
                                 >
                                 <select
@@ -1100,7 +1415,9 @@
                                     id="fSoil"
                                     onchange="checkValid()"
                                 >
-                                    <option value="">Select soil type</option>
+                                    <option value="" data-i18n="optSelectSoil">
+                                        Select soil type
+                                    </option>
                                     <optgroup label="Common Telangana Soils">
                                         <option>Red Sandy Loam</option>
                                         <option>Red Loam</option>
@@ -1126,7 +1443,9 @@
                             </div>
                             <div class="ffield">
                                 <label class="flabel"
-                                    >Water / Irrigation System
+                                    ><span data-i18n="labelWater"
+                                        >Water / Irrigation System</span
+                                    >
                                     <span class="flabel-req">*</span></label
                                 >
                                 <select
@@ -1134,7 +1453,7 @@
                                     id="fWater"
                                     onchange="checkValid()"
                                 >
-                                    <option value="">
+                                    <option value="" data-i18n="optSelectWater">
                                         Select water source
                                     </option>
                                     <optgroup label="Rain-Based">
@@ -1170,7 +1489,7 @@
                         disabled
                         onclick="findSchemes()"
                     >
-                        Find My Schemes
+                        <span data-i18n="btnSubmit">Find My Schemes</span>
                         <svg
                             width="16"
                             height="16"
@@ -1194,7 +1513,9 @@
         <div id="pageResults" class="page">
             <div id="resultsSpinner" class="spin-wrap">
                 <div class="spin"></div>
-                <div class="spin-txt">Matching schemes for you…</div>
+                <div class="spin-txt" data-i18n="spinnerText">
+                    Matching schemes for you…
+                </div>
             </div>
             <div id="resultsContent" class="results-wrap" style="display: none">
                 <h2 class="results-title" id="resultsTitle"></h2>
@@ -1204,6 +1525,197 @@
         </div>
 
         <script>
+            // ── TRANSLATIONS ──────────────────────────────────────────────────────────────
+            const TRANSLATIONS = {
+                en: {
+                    navChip: "Telangana",
+                    back: "← Back",
+                    introPill: "Telangana Scheme Finder",
+                    introSub:
+                        "Connecting Telangana Farmers to the Right Government Schemes",
+                    introDesc:
+                        "Answer a few simple questions about your farm, land size, and needs — we instantly match you with every government scheme you're eligible for, completely free of charge.",
+                    introBtn: "Get Started",
+                    metricSchemes: "Active Schemes",
+                    metricDistricts: "Districts Covered",
+                    metricFreeVal: "Free",
+                    metricFree: "No Cost Service",
+                    formHeading: "Tell us about your farm",
+                    formSubheading:
+                        "Fill in your details to instantly discover schemes you're eligible for.",
+                    secPersonal: "Personal Information",
+                    labelName: "Farmer Name",
+                    placeholderName: "Your full name",
+                    labelDistrict: "District",
+                    optSelectDistrict: "Select your district",
+                    labelCaste: "Caste Category",
+                    optSelectCaste: "Select caste category",
+                    secLand: "Land & Crop Details",
+                    labelLand: "Land Size (acres)",
+                    placeholderLand: "e.g. 2.5",
+                    labelCrop: "Crop Type",
+                    optSelectCrop: "Select your crop",
+                    secCategory: "Farmer Category",
+                    pillSmall: "Small",
+                    pillMarginal: "Marginal",
+                    pillTribal: "Tribal",
+                    pillLandless: "Landless",
+                    pillGeneral: "General",
+                    secOwnership: "Land Ownership",
+                    pillOwner: "Owner",
+                    pillTenant: "Tenant",
+                    secSoil: "Soil & Water Details",
+                    labelSoil: "Soil Type",
+                    optSelectSoil: "Select soil type",
+                    labelWater: "Water / Irrigation System",
+                    optSelectWater: "Select water source",
+                    btnSubmit: "Find My Schemes",
+                    spinnerText: "Matching schemes for you…",
+                    modalSubtitle: "Step-by-step application guide",
+                    modalLoading: "Generating application steps…",
+                    modalFootNote:
+                        "💡 Steps are AI-generated based on scheme details",
+                    officialWebsite: "Official Website",
+                    howToApply: "How to Apply",
+                    schemesFoundSingle: "Scheme Found for You",
+                    schemesFoundPlural: "Schemes Found for You",
+                    noMatch: "No Matching Schemes",
+                    noMatchMsg:
+                        "Please adjust your details — try different crop type, land size, or farmer category to discover more schemes.",
+                    cfCrop: "Crop",
+                    cfMaxLand: "Max Land",
+                    cfNoLimit: "No Limit",
+                    cfEligibility: "Eligibility",
+                    cfBenefits: "Benefits",
+                    cfDocs: "Required Documents",
+                    acres: "acres",
+                    schemeNum: "Scheme #",
+                    eligibleCount: "eligible",
+                    farmerSuffix: "Farmer",
+                    locTelangana: "🏛 Telangana",
+                    locPanIndia: "🇮🇳 Pan-India",
+                    proTip: "💡 Pro Tip",
+                },
+                hi: {
+                    navChip: "तेलंगाना",
+                    back: "← वापस",
+                    introPill: "तेलंगाना योजना खोजक",
+                    introSub:
+                        "तेलंगाना के किसानों को सही सरकारी योजनाओं से जोड़ना",
+                    introDesc:
+                        "अपनी खेती, भूमि और ज़रूरतों के बारे में कुछ सरल सवालों के जवाब दें — हम तुरंत उन सभी सरकारी योजनाओं से आपका मिलान करते हैं जिनके आप पात्र हैं, बिल्कुल मुफ्त।",
+                    introBtn: "शुरू करें",
+                    metricSchemes: "सक्रिय योजनाएँ",
+                    metricDistricts: "कवर किए जिले",
+                    metricFreeVal: "मुफ्त",
+                    metricFree: "मुफ्त सेवा",
+                    formHeading: "अपनी खेती के बारे में बताएं",
+                    formSubheading:
+                        "अपनी पात्र योजनाएँ तुरंत जानने के लिए विवरण भरें।",
+                    secPersonal: "व्यक्तिगत जानकारी",
+                    labelName: "किसान का नाम",
+                    placeholderName: "आपका पूरा नाम",
+                    labelDistrict: "जिला",
+                    optSelectDistrict: "अपना जिला चुनें",
+                    labelCaste: "जाति श्रेणी",
+                    optSelectCaste: "जाति श्रेणी चुनें",
+                    secLand: "भूमि एवं फसल विवरण",
+                    labelLand: "भूमि का आकार (एकड़)",
+                    placeholderLand: "जैसे 2.5",
+                    labelCrop: "फसल का प्रकार",
+                    optSelectCrop: "अपनी फसल चुनें",
+                    secCategory: "किसान श्रेणी",
+                    pillSmall: "लघु",
+                    pillMarginal: "सीमांत",
+                    pillTribal: "जनजातीय",
+                    pillLandless: "भूमिहीन",
+                    pillGeneral: "सामान्य",
+                    secOwnership: "भूमि स्वामित्व",
+                    pillOwner: "मालिक",
+                    pillTenant: "किरायेदार",
+                    secSoil: "मिट्टी एवं जल विवरण",
+                    labelSoil: "मिट्टी का प्रकार",
+                    optSelectSoil: "मिट्टी का प्रकार चुनें",
+                    labelWater: "जल / सिंचाई प्रणाली",
+                    optSelectWater: "जल स्रोत चुनें",
+                    btnSubmit: "मेरी योजनाएँ खोजें",
+                    spinnerText: "आपके लिए योजनाएँ खोजी जा रही हैं…",
+                    modalSubtitle: "आवेदन की चरण-दर-चरण मार्गदर्शिका",
+                    modalLoading: "आवेदन के चरण तैयार किए जा रहे हैं…",
+                    modalFootNote:
+                        "💡 चरण AI द्वारा योजना विवरण के आधार पर तैयार किए गए हैं",
+                    officialWebsite: "आधिकारिक वेबसाइट",
+                    howToApply: "आवेदन कैसे करें",
+                    schemesFoundSingle: "योजना मिली आपके लिए",
+                    schemesFoundPlural: "योजनाएँ मिलीं आपके लिए",
+                    noMatch: "कोई मिलान नहीं",
+                    noMatchMsg:
+                        "कृपया अपने विवरण बदलें — अन्य फसल, भूमि आकार या किसान श्रेणी आज़माएं।",
+                    cfCrop: "फसल",
+                    cfMaxLand: "अधिकतम भूमि",
+                    cfNoLimit: "कोई सीमा नहीं",
+                    cfEligibility: "पात्रता",
+                    cfBenefits: "लाभ",
+                    cfDocs: "आवश्यक दस्तावेज़",
+                    acres: "एकड़",
+                    schemeNum: "योजना #",
+                    eligibleCount: "पात्र",
+                    farmerSuffix: "किसान",
+                    locTelangana: "🏛 तेलंगाना",
+                    locPanIndia: "🇮🇳 पैन-इंडिया",
+                    proTip: "💡 प्रो टिप",
+                },
+            };
+
+            let currentLang = "en";
+
+            function t(key) {
+                return (
+                    TRANSLATIONS[currentLang][key] ||
+                    TRANSLATIONS["en"][key] ||
+                    key
+                );
+            }
+
+            function setLang(lang) {
+                currentLang = lang;
+                document
+                    .getElementById("btnEn")
+                    .classList.toggle("active", lang === "en");
+                document
+                    .getElementById("btnHi")
+                    .classList.toggle("active", lang === "hi");
+
+                // Update all data-i18n elements
+                document.querySelectorAll("[data-i18n]").forEach((el) => {
+                    const key = el.getAttribute("data-i18n");
+                    el.textContent = t(key);
+                });
+
+                // Update placeholders
+                document
+                    .querySelectorAll("[data-i18n-placeholder]")
+                    .forEach((el) => {
+                        const key = el.getAttribute("data-i18n-placeholder");
+                        el.placeholder = t(key);
+                    });
+
+                // Update select default options
+                document.querySelectorAll("[data-i18n]").forEach((el) => {
+                    if (el.tagName === "OPTION") {
+                        const key = el.getAttribute("data-i18n");
+                        el.textContent = t(key);
+                    }
+                });
+
+                // Re-render results if on results page (to update labels)
+                if (currentPage === "results" && renderedSchemes.length > 0) {
+                    const list = document.getElementById("resultsList");
+                    const currentSchemes = renderedSchemes;
+                    renderResults(currentSchemes, lastFormData);
+                }
+            }
+
             // ── DATA ──────────────────────────────────────────────────────────────────────
             const SCHEMES = [
                 {
@@ -2011,6 +2523,8 @@
             }
 
             // ── RENDER RESULTS ────────────────────────────────────────────────────────────
+            let lastFormData = {};
+
             function findSchemes() {
                 const fd = {
                     name: document.getElementById("fName").value.trim(),
@@ -2023,10 +2537,14 @@
                     category: formState.category,
                     ownership: formState.ownership,
                 };
+                lastFormData = fd;
 
                 showPage("results");
                 document.getElementById("resultsSpinner").style.display =
                     "flex";
+                document.querySelector(
+                    "#resultsSpinner .spin-txt",
+                ).textContent = t("spinnerText");
                 document.getElementById("resultsContent").style.display =
                     "none";
 
@@ -2042,27 +2560,27 @@
 
             function locBadge(loc) {
                 if (loc === "Telangana")
-                    return `<span class="card-loc loc-ts">🏛 Telangana</span>`;
+                    return `<span class="card-loc loc-ts">${t("locTelangana")}</span>`;
                 if (loc.toLowerCase().includes("pan"))
-                    return `<span class="card-loc loc-pan">🇮🇳 Pan-India</span>`;
+                    return `<span class="card-loc loc-pan">${t("locPanIndia")}</span>`;
                 return `<span class="card-loc loc-oth">📍 ${loc}</span>`;
             }
 
             function renderResults(schemes, fd) {
                 document.getElementById("resultsTitle").textContent =
                     schemes.length > 0
-                        ? `${schemes.length} Scheme${schemes.length > 1 ? "s" : ""} Found for You`
-                        : "No Matching Schemes";
+                        ? `${schemes.length} ${schemes.length > 1 ? t("schemesFoundPlural") : t("schemesFoundSingle")}`
+                        : t("noMatch");
 
                 const pills = document.getElementById("resultsPills");
                 pills.innerHTML = "";
                 if (schemes.length > 0)
-                    pills.innerHTML += `<span class="r-chip r-chip-green">✓ ${schemes.length} eligible</span>`;
+                    pills.innerHTML += `<span class="r-chip r-chip-green">✓ ${schemes.length} ${t("eligibleCount")}</span>`;
                 [
                     fd.name,
                     fd.district,
-                    fd.land + " acres",
-                    fd.category + " Farmer",
+                    fd.land + " " + t("acres"),
+                    fd.category + " " + t("farmerSuffix"),
                     fd.caste,
                     fd.ownership,
                     "🪨 " + fd.soil,
@@ -2076,12 +2594,13 @@
                     list.innerHTML = `
       <div class="empty">
         <div class="empty-icon">🌾</div>
-        <h3>No suitable schemes found.</h3>
-        <p>Please adjust your details — try different crop type, land size, or farmer category to discover more schemes.</p>
+        <h3>${t("noMatch")}</h3>
+        <p>${t("noMatchMsg")}</p>
       </div>`;
                     return;
                 }
 
+                renderedSchemes = schemes;
                 list.innerHTML = `<div class="cards">${schemes
                     .map(
                         (s, i) => `
@@ -2090,43 +2609,50 @@
         <div class="card-head-row">
           <div class="card-name">${s.name}</div>
           <div class="card-meta">
-            <span class="card-id">Scheme #${s.id}</span>
+            <span class="card-id">${t("schemeNum")}${s.id}</span>
             ${locBadge(s.location)}
           </div>
         </div>
         <div class="card-benefit">✦ ${s.short_benefit}</div>
-        <div class="card-tags-row">${s.tags.map((t) => `<span class="card-tag">${t}</span>`).join("")}</div>
+        <div class="card-tags-row">${s.tags.map((tag) => `<span class="card-tag">${tag}</span>`).join("")}</div>
       </div>
       <div class="card-body">
         <div class="cf">
-          <div class="cf-label">Crop</div>
+          <div class="cf-label">${t("cfCrop")}</div>
           <div class="cf-val" style="text-transform:capitalize">${s.crop}</div>
         </div>
         <div class="cf">
-          <div class="cf-label">Max Land</div>
-          <div class="cf-val">${s.max_land !== null ? s.max_land + " acres" : "No Limit"}</div>
+          <div class="cf-label">${t("cfMaxLand")}</div>
+          <div class="cf-val">${s.max_land !== null ? s.max_land + " " + t("acres") : t("cfNoLimit")}</div>
         </div>
         <div class="cf span2">
-          <div class="cf-label">Eligibility</div>
+          <div class="cf-label">${t("cfEligibility")}</div>
           <div class="cf-val">${s.eligibility}</div>
         </div>
         <div class="cf span2">
-          <div class="cf-label">Benefits</div>
+          <div class="cf-label">${t("cfBenefits")}</div>
           <div class="cf-val">${s.benefits}</div>
         </div>
         ${
             s.documents && s.documents.length > 0
                 ? `
         <div class="cf span2">
-          <div class="cf-label">Required Documents</div>
+          <div class="cf-label">${t("cfDocs")}</div>
           <ul class="docs-ul">${s.documents.map((d) => `<li>${d}</li>`).join("")}</ul>
         </div>`
                 : ""
         }
       </div>
-      <div class="card-foot">
+      <div class="card-foot" style="justify-content:space-between">
+        <button class="btn-how" onclick="openModal(${s.id})">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M7 6.5v4M7 4.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          ${t("howToApply")}
+        </button>
         <a href="${s.official_link}" target="_blank" rel="noopener noreferrer" class="btn-official">
-          View Official Website
+          ${t("officialWebsite")}
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
             <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -2136,6 +2662,182 @@
                     )
                     .join("")}</div>`;
             }
+
+            // ── MODAL & HOW-TO-APPLY ──────────────────────────────────────────────────────
+            let renderedSchemes = [];
+
+            function openModal(schemeId) {
+                const scheme = renderedSchemes.find((s) => s.id === schemeId);
+                if (!scheme) return;
+
+                document.getElementById("modalSchemeName").textContent =
+                    scheme.name;
+                document.getElementById("modalOfficialLink").href =
+                    scheme.official_link;
+                document.getElementById("modalBody").innerHTML = `
+    <div class="modal-loading">
+      <div class="modal-spin"></div>
+      <div class="modal-spin-txt">${t("modalLoading")}</div>
+    </div>`;
+                document.getElementById("modalFoot").style.display = "none";
+                document.getElementById("modalOverlay").classList.add("open");
+                document.body.style.overflow = "hidden";
+
+                generateSteps(scheme);
+            }
+
+            function closeModal() {
+                document
+                    .getElementById("modalOverlay")
+                    .classList.remove("open");
+                document.body.style.overflow = "";
+            }
+
+            function handleOverlayClick(e) {
+                if (e.target === document.getElementById("modalOverlay"))
+                    closeModal();
+            }
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") closeModal();
+            });
+
+            async function generateSteps(scheme) {
+                const prompt = `You are an expert on Indian government agricultural schemes. A farmer wants to apply for the "${scheme.name}" scheme.
+
+Scheme details:
+- Eligibility: ${scheme.eligibility}
+- Benefits: ${scheme.benefits}
+- Required Documents: ${scheme.documents.join(", ")}
+- Official Link: ${scheme.official_link}
+- Location: ${scheme.location}
+
+Generate exactly 5-7 clear, practical, numbered steps the farmer should follow to apply for this scheme. Each step must have:
+1. A short title (4-7 words)
+2. A 1-2 sentence description that is specific and actionable
+
+Also add one short "Pro Tip" at the end.
+
+Respond ONLY in this exact JSON format, no markdown, no extra text:
+{
+  "steps": [
+    {"title": "Step title here", "desc": "Description here."},
+    ...
+  ],
+  "tip": "Pro tip text here."
+}`;
+
+                try {
+                    const res = await fetch(
+                        "https://api.anthropic.com/v1/messages",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                model: "claude-sonnet-4-20250514",
+                                max_tokens: 1000,
+                                messages: [{ role: "user", content: prompt }],
+                            }),
+                        },
+                    );
+
+                    const data = await res.json();
+                    const raw = data.content
+                        .map((b) => b.text || "")
+                        .join("")
+                        .trim();
+                    const clean = raw.replace(/```json|```/g, "").trim();
+                    const parsed = JSON.parse(clean);
+                    renderSteps(parsed);
+                } catch (err) {
+                    document.getElementById("modalBody").innerHTML = `
+      <div class="modal-error">
+        <div class="modal-error-icon">📋</div>
+        <p>Here are the general steps to apply for <strong>${scheme.name}</strong>:<br><br>
+        1. Gather required documents: <strong>${scheme.documents.join(", ")}</strong><br>
+        2. Visit your nearest Agricultural Extension Office or Common Service Centre (CSC)<br>
+        3. Request the application form for ${scheme.name}<br>
+        4. Fill in your personal, land, and bank details accurately<br>
+        5. Attach all required documents and submit the form<br>
+        6. Collect your acknowledgement slip and track status online<br><br>
+        For full details, visit the <a href="${scheme.official_link}" target="_blank" style="color:var(--green);font-weight:600">official website ↗</a></p>
+      </div>`;
+                    document.getElementById("modalFoot").style.display = "flex";
+                }
+            }
+
+            function renderSteps(data) {
+                const stepsHtml = data.steps
+                    .map(
+                        (step, i) => `
+    <div class="step-item" style="animation-delay:${i * 0.08}s">
+      <div class="step-num">${i + 1}</div>
+      <div class="step-content">
+        <div class="step-title">${step.title}</div>
+        <div class="step-desc">${step.desc}</div>
+      </div>
+    </div>`,
+                    )
+                    .join("");
+
+                document.getElementById("modalBody").innerHTML = `
+    <div class="steps-list">${stepsHtml}</div>
+    ${data.tip ? `<div class="modal-tip"><strong>${t("proTip")}:</strong> ${data.tip}</div>` : ""}`;
+                document.getElementById("modalFoot").style.display = "flex";
+                document.querySelector(".modal-foot-note").textContent =
+                    t("modalFootNote");
+            }
         </script>
+
+        <!-- ── HOW TO APPLY MODAL ── -->
+        <div
+            class="modal-overlay"
+            id="modalOverlay"
+            onclick="handleOverlayClick(event)"
+        >
+            <div class="modal" id="modal">
+                <div class="modal-handle"></div>
+                <div class="modal-head">
+                    <div>
+                        <div
+                            class="modal-scheme-name"
+                            id="modalSchemeName"
+                        ></div>
+                        <div class="modal-subtitle" data-i18n="modalSubtitle">
+                            Step-by-step application guide
+                        </div>
+                    </div>
+                    <button class="modal-close" onclick="closeModal()">
+                        ✕
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <div class="modal-loading">
+                        <div class="modal-spin"></div>
+                        <div class="modal-spin-txt" data-i18n="modalLoading">
+                            Generating application steps…
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-foot" id="modalFoot" style="display: none">
+                    <span class="modal-foot-note" data-i18n="modalFootNote"
+                        >💡 Steps are AI-generated based on scheme details</span
+                    >
+                    <a
+                        id="modalOfficialLink"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-official"
+                        style="font-size: 0.8rem; padding: 8px 16px"
+                    >
+                        <span data-i18n="officialWebsite"
+                            >Official Website</span
+                        >
+                        ↗
+                    </a>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
