@@ -1,0 +1,2141 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Agri Setu – Telangana Agriculture Scheme Finder</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            :root {
+                --green: #2d6a4f;
+                --green-light: #40916c;
+                --green-pale: #d8f3dc;
+                --green-ultra: #f0faf2;
+                --ink: #0d1f12;
+                --ink-mid: #3a4a40;
+                --ink-soft: #6b7c72;
+                --border: #e3ece5;
+                --surface: #ffffff;
+                --bg: #f7f9f7;
+                --radius: 20px;
+                --radius-sm: 12px;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                font-family: "DM Sans", sans-serif;
+                background: var(--bg);
+                color: var(--ink);
+                min-height: 100vh;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            /* ── NAVBAR ── */
+            .nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 200;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 40px;
+                height: 64px;
+                background: rgba(247, 249, 247, 0.9);
+                backdrop-filter: saturate(180%) blur(20px);
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-brand {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-family: "Lora", serif;
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: var(--green);
+                letter-spacing: -0.3px;
+            }
+            .nav-chip {
+                font-size: 0.68rem;
+                font-weight: 600;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                color: var(--green);
+                background: var(--green-pale);
+                padding: 4px 12px;
+                border-radius: 20px;
+            }
+            .nav-back {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 0.85rem;
+                font-weight: 500;
+                color: var(--ink-soft);
+                background: none;
+                border: 1.5px solid var(--border);
+                padding: 7px 16px;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: all 0.2s;
+                font-family: "DM Sans", sans-serif;
+            }
+            .nav-back:hover {
+                color: var(--green);
+                border-color: var(--green);
+            }
+            .nav-right {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            /* ── PAGE SYSTEM ── */
+            .page {
+                display: none;
+                min-height: 100vh;
+                padding-top: 64px;
+            }
+            .page.active {
+                display: block;
+            }
+
+            /* ── INTRO ── */
+            .intro-wrap {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: calc(100vh - 64px);
+                padding: 60px 24px 80px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+            .intro-blob {
+                position: absolute;
+                border-radius: 50%;
+                pointer-events: none;
+                background: radial-gradient(
+                    circle,
+                    rgba(45, 106, 79, 0.09) 0%,
+                    transparent 65%
+                );
+            }
+            .blob-a {
+                width: 800px;
+                height: 800px;
+                top: -300px;
+                right: -250px;
+            }
+            .blob-b {
+                width: 600px;
+                height: 600px;
+                bottom: -250px;
+                left: -200px;
+            }
+
+            .intro-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.72rem;
+                font-weight: 600;
+                letter-spacing: 1.8px;
+                text-transform: uppercase;
+                color: var(--green);
+                background: var(--green-ultra);
+                border: 1px solid var(--green-pale);
+                padding: 7px 18px;
+                border-radius: 30px;
+                margin-bottom: 32px;
+                animation: fadeUp 0.5s ease both;
+            }
+            .intro-h1 {
+                font-family: "Lora", serif;
+                font-size: clamp(3.5rem, 9vw, 7rem);
+                font-weight: 700;
+                line-height: 0.95;
+                color: var(--ink);
+                letter-spacing: -3px;
+                margin-bottom: 10px;
+                animation: fadeUp 0.5s 0.1s ease both;
+            }
+            .intro-h1 i {
+                color: var(--green);
+                font-style: italic;
+            }
+            .intro-sub {
+                font-size: clamp(1rem, 2.2vw, 1.2rem);
+                font-weight: 400;
+                color: var(--ink-mid);
+                max-width: 500px;
+                line-height: 1.55;
+                margin: 0 auto 14px;
+                animation: fadeUp 0.5s 0.2s ease both;
+            }
+            .intro-desc {
+                font-size: 0.92rem;
+                color: var(--ink-soft);
+                max-width: 440px;
+                line-height: 1.75;
+                margin: 0 auto 52px;
+                animation: fadeUp 0.5s 0.2s ease both;
+            }
+            .btn-cta {
+                display: inline-flex;
+                align-items: center;
+                gap: 12px;
+                background: var(--green);
+                color: #fff;
+                font-family: "DM Sans", sans-serif;
+                font-size: 0.95rem;
+                font-weight: 600;
+                padding: 15px 36px;
+                border-radius: 50px;
+                border: none;
+                cursor: pointer;
+                transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+                box-shadow: 0 8px 32px rgba(45, 106, 79, 0.28);
+                animation: fadeUp 0.5s 0.3s ease both;
+            }
+            .btn-cta:hover {
+                background: #1e5c3e;
+                transform: translateY(-3px) scale(1.02);
+                box-shadow: 0 16px 48px rgba(45, 106, 79, 0.35);
+            }
+            .btn-cta svg {
+                transition: transform 0.2s;
+            }
+            .btn-cta:hover svg {
+                transform: translateX(5px);
+            }
+
+            .intro-metrics {
+                display: flex;
+                gap: 56px;
+                margin-top: 80px;
+                flex-wrap: wrap;
+                justify-content: center;
+                animation: fadeUp 0.5s 0.4s ease both;
+            }
+            .metric {
+                text-align: center;
+            }
+            .metric-val {
+                font-family: "Lora", serif;
+                font-size: 2.4rem;
+                font-weight: 700;
+                color: var(--green);
+                line-height: 1;
+            }
+            .metric-lbl {
+                font-size: 0.75rem;
+                color: var(--ink-soft);
+                margin-top: 6px;
+            }
+            .metric-div {
+                width: 1px;
+                background: var(--border);
+                align-self: stretch;
+            }
+
+            /* ── FORM ── */
+            .form-wrap {
+                max-width: 700px;
+                margin: 0 auto;
+                padding: 48px 24px 80px;
+            }
+            .form-heading {
+                font-family: "Lora", serif;
+                font-size: clamp(1.7rem, 4vw, 2.5rem);
+                font-weight: 700;
+                color: var(--ink);
+                letter-spacing: -1px;
+                margin-bottom: 8px;
+                animation: fadeUp 0.5s ease both;
+            }
+            .form-subheading {
+                font-size: 0.92rem;
+                color: var(--ink-soft);
+                margin-bottom: 36px;
+                line-height: 1.6;
+                animation: fadeUp 0.5s 0.1s ease both;
+            }
+            .form-card {
+                background: var(--surface);
+                border-radius: var(--radius);
+                padding: 40px;
+                box-shadow: 0 6px 30px rgba(45, 106, 79, 0.12);
+                border: 1px solid var(--border);
+                animation: fadeUp 0.5s 0.2s ease both;
+            }
+            .fsec {
+                margin-bottom: 32px;
+            }
+            .fsec-title {
+                font-size: 0.65rem;
+                font-weight: 700;
+                letter-spacing: 2.5px;
+                text-transform: uppercase;
+                color: var(--green);
+                margin-bottom: 18px;
+                padding-bottom: 10px;
+                border-bottom: 1.5px solid var(--green-pale);
+            }
+            .fgrid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+            .ffield {
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+            }
+            .flabel {
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--ink-mid);
+            }
+            .flabel-req {
+                color: #d63384;
+                margin-left: 3px;
+            }
+            .finput,
+            .fselect {
+                width: 100%;
+                padding: 12px 16px;
+                border: 1.5px solid var(--border);
+                border-radius: var(--radius-sm);
+                font-family: "DM Sans", sans-serif;
+                font-size: 0.93rem;
+                color: var(--ink);
+                background: #fafbfa;
+                transition: all 0.2s;
+                outline: none;
+                appearance: none;
+            }
+            .finput:focus,
+            .fselect:focus {
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
+                background: #fff;
+            }
+            .finput::placeholder {
+                color: #bbb;
+            }
+
+            /* Pills */
+            .fpills {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 9px;
+            }
+            .fpill {
+                padding: 9px 17px;
+                border-radius: 30px;
+                border: 1.5px solid var(--border);
+                background: #fafbfa;
+                cursor: pointer;
+                font-size: 0.86rem;
+                font-weight: 400;
+                color: var(--ink-soft);
+                transition: all 0.18s;
+                user-select: none;
+                font-family: "DM Sans", sans-serif;
+            }
+            .fpill:hover {
+                border-color: var(--green);
+                color: var(--green);
+            }
+            .fpill.sel {
+                border-color: var(--green);
+                background: var(--green-ultra);
+                color: var(--green);
+                font-weight: 600;
+            }
+
+            /* Submit */
+            .btn-submit {
+                width: 100%;
+                padding: 15px;
+                background: var(--green);
+                color: #fff;
+                font-family: "DM Sans", sans-serif;
+                font-size: 0.97rem;
+                font-weight: 600;
+                border: none;
+                border-radius: var(--radius-sm);
+                cursor: pointer;
+                transition: all 0.25s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 4px;
+                box-shadow: 0 6px 24px rgba(45, 106, 79, 0.22);
+            }
+            .btn-submit:hover:not(:disabled) {
+                background: #1e5c3e;
+                transform: translateY(-1px);
+                box-shadow: 0 10px 36px rgba(45, 106, 79, 0.3);
+            }
+            .btn-submit:disabled {
+                opacity: 0.45;
+                cursor: not-allowed;
+            }
+
+            /* ── RESULTS ── */
+            .results-wrap {
+                max-width: 860px;
+                margin: 0 auto;
+                padding: 48px 24px 80px;
+            }
+            .results-title {
+                font-family: "Lora", serif;
+                font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+                font-weight: 700;
+                color: var(--ink);
+                letter-spacing: -0.8px;
+                margin-bottom: 12px;
+                animation: fadeUp 0.5s ease both;
+            }
+            .results-pills {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-bottom: 32px;
+                animation: fadeUp 0.5s 0.1s ease both;
+            }
+            .r-chip {
+                font-size: 0.78rem;
+                font-weight: 500;
+                padding: 5px 14px;
+                border-radius: 20px;
+                border: 1px solid var(--border);
+                color: var(--ink-soft);
+                background: var(--surface);
+            }
+            .r-chip-green {
+                background: var(--green-pale);
+                border-color: transparent;
+                color: var(--green);
+                font-weight: 700;
+            }
+
+            /* Cards */
+            .cards {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            .card {
+                background: var(--surface);
+                border-radius: var(--radius);
+                border: 1px solid var(--border);
+                box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+                overflow: hidden;
+                transition:
+                    box-shadow 0.25s,
+                    transform 0.25s;
+            }
+            .card:hover {
+                box-shadow: 0 16px 60px rgba(45, 106, 79, 0.15);
+                transform: translateY(-3px);
+            }
+
+            .card-head {
+                padding: 26px 28px 20px;
+                border-bottom: 1px solid var(--border);
+            }
+            .card-head-row {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+            .card-name {
+                font-family: "Lora", serif;
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: var(--ink);
+                line-height: 1.3;
+            }
+            .card-meta {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 5px;
+                flex-shrink: 0;
+            }
+            .card-id {
+                font-size: 0.68rem;
+                font-weight: 700;
+                color: var(--green);
+                background: var(--green-pale);
+                padding: 4px 11px;
+                border-radius: 20px;
+                white-space: nowrap;
+            }
+            .card-loc {
+                font-size: 0.65rem;
+                font-weight: 600;
+                letter-spacing: 0.8px;
+                padding: 3px 9px;
+                border-radius: 20px;
+                white-space: nowrap;
+            }
+            .loc-ts {
+                background: #e8f5e9;
+                color: #2d6a4f;
+                border: 1px solid #b7dfc9;
+            }
+            .loc-pan {
+                background: #e3f2fd;
+                color: #1565c0;
+                border: 1px solid #bbdefb;
+            }
+            .loc-oth {
+                background: #fff8e1;
+                color: #e65100;
+                border: 1px solid #ffe0b2;
+            }
+
+            .card-benefit {
+                font-size: 0.97rem;
+                font-weight: 500;
+                color: var(--green-light);
+                margin-bottom: 10px;
+            }
+            .card-tags-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .card-tag {
+                font-size: 0.7rem;
+                font-weight: 500;
+                background: var(--bg);
+                color: var(--ink-soft);
+                padding: 4px 11px;
+                border-radius: 20px;
+                border: 1px solid var(--border);
+            }
+
+            .card-body {
+                padding: 22px 28px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .cf {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+            .cf.span2 {
+                grid-column: 1 / -1;
+            }
+            .cf-label {
+                font-size: 0.65rem;
+                font-weight: 700;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+            }
+            .cf-val {
+                font-size: 0.9rem;
+                color: var(--ink-mid);
+                line-height: 1.5;
+            }
+
+            .docs-ul {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                margin-top: 2px;
+            }
+            .docs-ul li {
+                font-size: 0.88rem;
+                color: var(--ink-mid);
+                display: flex;
+                align-items: center;
+                gap: 9px;
+            }
+            .docs-ul li::before {
+                content: "";
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--green);
+                flex-shrink: 0;
+            }
+
+            .card-foot {
+                padding: 14px 28px 18px;
+                border-top: 1px solid var(--border);
+                display: flex;
+                justify-content: flex-end;
+            }
+            .btn-official {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: var(--green-ultra);
+                color: var(--green);
+                font-family: "DM Sans", sans-serif;
+                font-size: 0.84rem;
+                font-weight: 600;
+                padding: 10px 20px;
+                border-radius: 30px;
+                border: 1.5px solid var(--green-pale);
+                text-decoration: none;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .btn-official:hover {
+                background: var(--green);
+                color: #fff;
+                border-color: var(--green);
+            }
+
+            /* Empty */
+            .empty {
+                text-align: center;
+                padding: 80px 32px;
+                background: var(--surface);
+                border-radius: var(--radius);
+                box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+                border: 1px solid var(--border);
+            }
+            .empty-icon {
+                font-size: 3.5rem;
+                margin-bottom: 20px;
+            }
+            .empty h3 {
+                font-family: "Lora", serif;
+                font-size: 1.4rem;
+                color: var(--ink);
+                margin-bottom: 10px;
+            }
+            .empty p {
+                font-size: 0.92rem;
+                color: var(--ink-soft);
+                line-height: 1.7;
+            }
+
+            /* Spinner */
+            .spin-wrap {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 20px;
+                min-height: calc(100vh - 200px);
+            }
+            .spin {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                border: 3px solid var(--green-pale);
+                border-top-color: var(--green);
+                animation: rotate 0.75s linear infinite;
+            }
+            .spin-txt {
+                font-size: 0.88rem;
+                color: var(--ink-soft);
+            }
+
+            /* Animations */
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(22px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes rotate {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            @keyframes cardIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(18px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .card-anim {
+                animation: cardIn 0.45s ease both;
+            }
+
+            /* Responsive */
+            @media (max-width: 600px) {
+                .nav {
+                    padding: 0 20px;
+                }
+                .fgrid {
+                    grid-template-columns: 1fr;
+                }
+                .form-card {
+                    padding: 24px 20px;
+                }
+                .card-body {
+                    grid-template-columns: 1fr;
+                }
+                .cf.span2 {
+                    grid-column: 1;
+                }
+                .card-head,
+                .card-body,
+                .card-foot {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                }
+                .intro-metrics {
+                    gap: 28px;
+                }
+                .metric-div {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ── NAVBAR ── -->
+        <nav class="nav">
+            <div class="nav-brand"><span>🌾</span> Agri Setu</div>
+            <div class="nav-right">
+                <span class="nav-chip">Telangana</span>
+                <button
+                    class="nav-back"
+                    id="btnBack"
+                    style="display: none"
+                    onclick="goBack()"
+                >
+                    ← Back
+                </button>
+            </div>
+        </nav>
+
+        <!-- ── INTRO PAGE ── -->
+        <div id="pageIntro" class="page active">
+            <div class="intro-wrap">
+                <div class="intro-blob blob-a"></div>
+                <div class="intro-blob blob-b"></div>
+                <div class="intro-pill">🌱 Telangana Scheme Finder</div>
+                <h1 class="intro-h1"><i>Agri</i> Setu</h1>
+                <p class="intro-sub">
+                    Connecting Telangana Farmers to the Right Government Schemes
+                </p>
+                <p class="intro-desc">
+                    Answer a few simple questions about your farm, land size,
+                    and needs — we instantly match you with every government
+                    scheme you're eligible for, completely free of charge.
+                </p>
+                <button class="btn-cta" onclick="showPage('form')">
+                    Get Started
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path
+                            d="M3 8h10M9 4l4 4-4 4"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
+                <div class="intro-metrics">
+                    <div class="metric">
+                        <div class="metric-val">50+</div>
+                        <div class="metric-lbl">Active Schemes</div>
+                    </div>
+                    <div class="metric-div"></div>
+                    <div class="metric">
+                        <div class="metric-val">33</div>
+                        <div class="metric-lbl">Districts Covered</div>
+                    </div>
+                    <div class="metric-div"></div>
+                    <div class="metric">
+                        <div class="metric-val">Free</div>
+                        <div class="metric-lbl">No Cost Service</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── FORM PAGE ── -->
+        <div id="pageForm" class="page">
+            <div class="form-wrap">
+                <h2 class="form-heading">Tell us about your farm</h2>
+                <p class="form-subheading">
+                    Fill in your details to instantly discover schemes you're
+                    eligible for.
+                </p>
+
+                <div class="form-card">
+                    <!-- Personal Info -->
+                    <div class="fsec">
+                        <div class="fsec-title">Personal Information</div>
+                        <div class="fgrid">
+                            <div class="ffield">
+                                <label class="flabel"
+                                    >Farmer Name
+                                    <span class="flabel-req">*</span></label
+                                >
+                                <input
+                                    class="finput"
+                                    id="fName"
+                                    type="text"
+                                    placeholder="Your full name"
+                                    oninput="checkValid()"
+                                />
+                            </div>
+                            <div class="ffield">
+                                <label class="flabel"
+                                    >District
+                                    <span class="flabel-req">*</span></label
+                                >
+                                <select
+                                    class="fselect"
+                                    id="fDistrict"
+                                    onchange="checkValid()"
+                                >
+                                    <option value="">
+                                        Select your district
+                                    </option>
+                                    <option>Adilabad</option>
+                                    <option>Bhadradri Kothagudem</option>
+                                    <option>Hanumakonda</option>
+                                    <option>Hyderabad</option>
+                                    <option>Jagtial</option>
+                                    <option>Jangaon</option>
+                                    <option>Jayashankar Bhupalpally</option>
+                                    <option>Jogulamba Gadwal</option>
+                                    <option>Kamareddy</option>
+                                    <option>Karimnagar</option>
+                                    <option>Khammam</option>
+                                    <option>Kumuram Bheem Asifabad</option>
+                                    <option>Mahabubabad</option>
+                                    <option>Mahabubnagar</option>
+                                    <option>Mancherial</option>
+                                    <option>Medak</option>
+                                    <option>Medchal-Malkajgiri</option>
+                                    <option>Mulugu</option>
+                                    <option>Nagarkurnool</option>
+                                    <option>Nalgonda</option>
+                                    <option>Narayanpet</option>
+                                    <option>Nirmal</option>
+                                    <option>Nizamabad</option>
+                                    <option>Peddapalli</option>
+                                    <option>Rajanna Sircilla</option>
+                                    <option>Rangareddy</option>
+                                    <option>Sangareddy</option>
+                                    <option>Siddipet</option>
+                                    <option>Suryapet</option>
+                                    <option>Vikarabad</option>
+                                    <option>Wanaparthy</option>
+                                    <option>Warangal</option>
+                                    <option>Yadadri Bhuvanagiri</option>
+                                </select>
+                            </div>
+                            <div class="ffield">
+                                <label class="flabel"
+                                    >Caste Category
+                                    <span class="flabel-req">*</span></label
+                                >
+                                <select
+                                    class="fselect"
+                                    id="fCaste"
+                                    onchange="checkValid()"
+                                >
+                                    <option value="">
+                                        Select caste category
+                                    </option>
+                                    <optgroup label="Scheduled">
+                                        <option value="SC">
+                                            SC — Scheduled Caste
+                                        </option>
+                                        <option value="ST">
+                                            ST — Scheduled Tribe
+                                        </option>
+                                    </optgroup>
+                                    <optgroup label="Backward Classes">
+                                        <option value="BC-A">
+                                            BC-A — Backward Class A
+                                        </option>
+                                        <option value="BC-B">
+                                            BC-B — Backward Class B
+                                        </option>
+                                        <option value="BC-C">
+                                            BC-C — Backward Class C
+                                        </option>
+                                        <option value="BC-D">
+                                            BC-D — Backward Class D
+                                        </option>
+                                        <option value="BC-E">
+                                            BC-E — Backward Class E
+                                        </option>
+                                    </optgroup>
+                                    <optgroup label="Other">
+                                        <option value="OC">
+                                            OC — Open / General Category
+                                        </option>
+                                        <option value="EWS">
+                                            EWS — Economically Weaker Section
+                                        </option>
+                                        <option value="Minority">
+                                            Minority
+                                        </option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Land & Crop -->
+                    <div class="fsec">
+                        <div class="fsec-title">Land & Crop Details</div>
+                        <div class="fgrid">
+                            <div class="ffield">
+                                <label class="flabel"
+                                    >Land Size (acres)
+                                    <span class="flabel-req">*</span></label
+                                >
+                                <input
+                                    class="finput"
+                                    id="fLand"
+                                    type="number"
+                                    min="0"
+                                    step="0.5"
+                                    placeholder="e.g. 2.5"
+                                    oninput="checkValid()"
+                                />
+                            </div>
+                            <div class="ffield">
+                                <label class="flabel"
+                                    >Crop Type
+                                    <span class="flabel-req">*</span></label
+                                >
+                                <select
+                                    class="fselect"
+                                    id="fCrop"
+                                    onchange="checkValid()"
+                                >
+                                    <option value="">Select your crop</option>
+                                    <optgroup label="Cereals & Millets">
+                                        <option>Rice (Paddy)</option>
+                                        <option>Maize (Corn)</option>
+                                        <option>Sorghum (Jowar)</option>
+                                        <option>Pearl Millet (Bajra)</option>
+                                        <option>Finger Millet (Ragi)</option>
+                                    </optgroup>
+                                    <optgroup label="Pulses">
+                                        <option>Red Gram (Tur / Arhar)</option>
+                                        <option>Chickpea (Bengal Gram)</option>
+                                        <option>Black Gram (Urad)</option>
+                                        <option>Green Gram (Moong)</option>
+                                    </optgroup>
+                                    <optgroup label="Oilseeds">
+                                        <option>Groundnut</option>
+                                        <option>Sunflower</option>
+                                        <option>Sesame (Til)</option>
+                                        <option>Soybean</option>
+                                        <option>Castor</option>
+                                    </optgroup>
+                                    <optgroup label="Cash Crops">
+                                        <option>Cotton</option>
+                                        <option>Sugarcane</option>
+                                        <option>Turmeric</option>
+                                        <option>Chilli</option>
+                                        <option>Ginger</option>
+                                    </optgroup>
+                                    <optgroup label="Vegetables">
+                                        <option>Onion</option>
+                                        <option>Tomato</option>
+                                        <option>Brinjal</option>
+                                        <option>Okra (Bhendi)</option>
+                                        <option>Bitter Gourd</option>
+                                        <option>Bottle Gourd</option>
+                                        <option>Cucumber</option>
+                                    </optgroup>
+                                    <optgroup label="Fruits / Horticulture">
+                                        <option>Mango</option>
+                                        <option>Banana</option>
+                                        <option>Papaya</option>
+                                        <option>Guava</option>
+                                        <option>Sweet Lime (Mosambi)</option>
+                                        <option>Pomegranate</option>
+                                        <option>Grapes</option>
+                                        <option>Watermelon</option>
+                                        <option>Sapota (Chiku)</option>
+                                    </optgroup>
+                                    <optgroup label="Allied / Specialty">
+                                        <option>Sericulture (Silk)</option>
+                                        <option>
+                                            Aquaculture (Fish Farming)
+                                        </option>
+                                        <option>Livestock / Dairy</option>
+                                        <option>Oilseeds (Mixed)</option>
+                                        <option>Agro-Forestry</option>
+                                    </optgroup>
+                                    <optgroup label="General">
+                                        <option>Horticulture (Mixed)</option>
+                                        <option>Vegetables (Mixed)</option>
+                                        <option>Pulses (Mixed)</option>
+                                        <option>Millets (Mixed)</option>
+                                        <option>Other / General Farming</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Farmer Category -->
+                    <div class="fsec">
+                        <div class="fsec-title">
+                            Farmer Category
+                            <span class="flabel-req" style="font-size: 0.7rem"
+                                >*</span
+                            >
+                        </div>
+                        <div class="fpills" id="pillsCategory">
+                            <button
+                                class="fpill"
+                                onclick="selectPill('category',this,'Small')"
+                            >
+                                Small
+                            </button>
+                            <button
+                                class="fpill"
+                                onclick="selectPill('category',this,'Marginal')"
+                            >
+                                Marginal
+                            </button>
+                            <button
+                                class="fpill"
+                                onclick="selectPill('category',this,'Tribal')"
+                            >
+                                Tribal
+                            </button>
+                            <button
+                                class="fpill"
+                                onclick="selectPill('category',this,'Landless')"
+                            >
+                                Landless
+                            </button>
+                            <button
+                                class="fpill"
+                                onclick="selectPill('category',this,'General')"
+                            >
+                                General
+                            </button>
+                        </div>
+                        <input type="hidden" id="fCategory" />
+                    </div>
+
+                    <!-- Ownership -->
+                    <div class="fsec">
+                        <div class="fsec-title">
+                            Land Ownership
+                            <span class="flabel-req" style="font-size: 0.7rem"
+                                >*</span
+                            >
+                        </div>
+                        <div class="fpills" id="pillsOwnership">
+                            <button
+                                class="fpill"
+                                onclick="selectPill('ownership',this,'Owner')"
+                            >
+                                Owner
+                            </button>
+                            <button
+                                class="fpill"
+                                onclick="selectPill('ownership',this,'Tenant')"
+                            >
+                                Tenant
+                            </button>
+                        </div>
+                        <input type="hidden" id="fOwnership" />
+                    </div>
+
+                    <!-- Soil & Water -->
+                    <div class="fsec">
+                        <div class="fsec-title">Soil & Water Details</div>
+                        <div class="fgrid">
+                            <div class="ffield">
+                                <label class="flabel"
+                                    >Soil Type
+                                    <span class="flabel-req">*</span></label
+                                >
+                                <select
+                                    class="fselect"
+                                    id="fSoil"
+                                    onchange="checkValid()"
+                                >
+                                    <option value="">Select soil type</option>
+                                    <optgroup label="Common Telangana Soils">
+                                        <option>Red Sandy Loam</option>
+                                        <option>Red Loam</option>
+                                        <option>
+                                            Deep Black Cotton (Vertisol)
+                                        </option>
+                                        <option>Shallow Black (Regur)</option>
+                                        <option>Medium Black</option>
+                                    </optgroup>
+                                    <optgroup label="Other Soil Types">
+                                        <option>Alluvial</option>
+                                        <option>Laterite</option>
+                                        <option>Sandy</option>
+                                        <option>Clay</option>
+                                        <option>Loamy</option>
+                                        <option>Saline / Alkaline</option>
+                                        <option>Rocky / Gravelly</option>
+                                        <option>
+                                            Forest / Tribal Land Soil
+                                        </option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="ffield">
+                                <label class="flabel"
+                                    >Water / Irrigation System
+                                    <span class="flabel-req">*</span></label
+                                >
+                                <select
+                                    class="fselect"
+                                    id="fWater"
+                                    onchange="checkValid()"
+                                >
+                                    <option value="">
+                                        Select water source
+                                    </option>
+                                    <optgroup label="Rain-Based">
+                                        <option value="Rainfed">
+                                            Rainfed (No Irrigation)
+                                        </option>
+                                    </optgroup>
+                                    <optgroup label="Surface Water">
+                                        <option>Canal Irrigation</option>
+                                        <option>Tank / Pond Irrigation</option>
+                                        <option>River Lift Irrigation</option>
+                                        <option>Reservoir / Dam Water</option>
+                                    </optgroup>
+                                    <optgroup label="Groundwater">
+                                        <option>Borewell / Tubewell</option>
+                                        <option>Open Well</option>
+                                        <option>Dug Well</option>
+                                    </optgroup>
+                                    <optgroup label="Modern Systems">
+                                        <option>Drip Irrigation</option>
+                                        <option>Sprinkler Irrigation</option>
+                                        <option>Solar Pump Irrigation</option>
+                                        <option>Micro Irrigation</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn-submit"
+                        id="btnSubmit"
+                        disabled
+                        onclick="findSchemes()"
+                    >
+                        Find My Schemes
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                        >
+                            <path
+                                d="M3 8h10M9 4l4 4-4 4"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── RESULTS PAGE ── -->
+        <div id="pageResults" class="page">
+            <div id="resultsSpinner" class="spin-wrap">
+                <div class="spin"></div>
+                <div class="spin-txt">Matching schemes for you…</div>
+            </div>
+            <div id="resultsContent" class="results-wrap" style="display: none">
+                <h2 class="results-title" id="resultsTitle"></h2>
+                <div class="results-pills" id="resultsPills"></div>
+                <div id="resultsList"></div>
+            </div>
+        </div>
+
+        <script>
+            // ── DATA ──────────────────────────────────────────────────────────────────────
+            const SCHEMES = [
+                {
+                    id: 1,
+                    name: "Rythu Bandhu Scheme",
+                    short_benefit:
+                        "₹5,000 per acre per season investment support.",
+                    location: "Telangana",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "All land\u2011owning farmers in Telangana.",
+                    documents: [
+                        "Aadhaar Card",
+                        "Pattadar Passbook",
+                        "Bank Account Details",
+                    ],
+                    benefits:
+                        "₹10,000 per acre annually (Kharif + Rabi) credited directly to bank accounts.",
+                    official_link: "https://rythubandhu.telangana.gov.in/",
+                    tags: ["Income Support", "DBT", "State Scheme"],
+                },
+                {
+                    id: 2,
+                    name: "Rythu Bima",
+                    short_benefit: "Life insurance cover for farmers.",
+                    location: "Telangana",
+                    crop: "all",
+                    max_land: null,
+                    eligibility:
+                        "Farmers aged 18\u201359 yrs registered as landowners.",
+                    documents: [
+                        "Aadhaar",
+                        "Land Records",
+                        "Death Certificate (for claim)",
+                    ],
+                    benefits:
+                        "₹5 lakh insurance payout to nominee in case of death.",
+                    official_link: "https://rythubima.telangana.gov.in/",
+                    tags: ["Insurance", "Farmer Welfare"],
+                },
+                {
+                    id: 3,
+                    name: "Telangana Crop Loan Waiver Scheme",
+                    short_benefit: "Waiver of eligible crop loans.",
+                    location: "Telangana",
+                    crop: "all",
+                    max_land: 5,
+                    eligibility: "Small & marginal farmers with crop loans.",
+                    documents: ["Loan Documents", "Aadhaar", "Land Records"],
+                    benefits: "Waiver of crop loans up to govt limit.",
+                    official_link: "https://www.telangana.gov.in/",
+                    tags: ["Loan Waiver", "Financial Relief"],
+                },
+                {
+                    id: 4,
+                    name: "PM\u2011KISAN Samman Nidhi",
+                    short_benefit: "₹6,000 per year income support.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: 5,
+                    eligibility:
+                        "Small & marginal farmers with cultivable land.",
+                    documents: ["Aadhaar", "Land Records", "Bank Passbook"],
+                    benefits: "₹6,000/yr in three installments via DBT.",
+                    official_link: "https://pmkisan.gov.in/",
+                    tags: ["Central Scheme", "Income Support"],
+                },
+                {
+                    id: 5,
+                    name: "PM Fasal Bima Yojana",
+                    short_benefit: "Crop insurance against calamities.",
+                    location: "Pan\u2011India",
+                    crop: "all notified",
+                    max_land: null,
+                    eligibility:
+                        "Farmers growing notified crops in notified areas.",
+                    documents: [
+                        "Aadhaar",
+                        "Land Records",
+                        "Sowing Certificate",
+                    ],
+                    benefits:
+                        "Coverage for crop loss due to drought, flood, pests.",
+                    official_link: "https://pmfby.gov.in/",
+                    tags: ["Insurance", "Crop Protection"],
+                },
+                {
+                    id: 6,
+                    name: "Mission Kakatiya",
+                    short_benefit: "Restoration of irrigation tanks.",
+                    location: "Telangana",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Farmers dependent on tank irrigation.",
+                    documents: ["Land Records"],
+                    benefits: "Improved water storage capacity.",
+                    official_link: "https://www.telangana.gov.in/",
+                    tags: ["Irrigation", "Water Management"],
+                },
+                {
+                    id: 7,
+                    name: "Kaleshwaram Lift Irrigation Project Support",
+                    short_benefit: "Major irrigation infrastructure support.",
+                    location: "Telangana",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Farmers in command areas.",
+                    documents: ["Land Records"],
+                    benefits: "Assured irrigation water supply.",
+                    official_link: "https://www.telangana.gov.in/",
+                    tags: ["Irrigation"],
+                },
+                {
+                    id: 8,
+                    name: "National Food Security Mission",
+                    short_benefit: "Support for rice, pulses, coarse cereals.",
+                    location: "Pan\u2011India",
+                    crop: "rice,pulses,millets",
+                    max_land: null,
+                    eligibility: "Farmers growing notified crops.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Subsidized seeds & inputs.",
+                    official_link: "https://nfsm.gov.in/",
+                    tags: ["Seeds", "Subsidy"],
+                },
+                {
+                    id: 9,
+                    name: "Sub\u2011Mission on Agricultural Mechanization",
+                    short_benefit: "Subsidy on farm machinery.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Farmers & FPOs.",
+                    documents: ["Aadhaar", "Land Records", "Quotation"],
+                    benefits: "40\u201350% subsidy on tractors & implements.",
+                    official_link: "https://agrimachinery.nic.in/",
+                    tags: ["Mechanization", "Subsidy"],
+                },
+                {
+                    id: 10,
+                    name: "Soil Health Card Scheme",
+                    short_benefit: "Free soil testing & nutrient advice.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "All farmers.",
+                    documents: ["Land Records"],
+                    benefits: "Soil test reports & fertilizer recommendations.",
+                    official_link: "https://soilhealth.dac.gov.in/",
+                    tags: ["Soil", "Advisory"],
+                },
+                {
+                    id: 11,
+                    name: "Pradhan Mantri Krishi Sinchai Yojana",
+                    short_benefit:
+                        "Irrigation coverage & water use efficiency.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Farmers & communities.",
+                    documents: ["Land Records"],
+                    benefits:
+                        "Micro\u2011irrigation subsidies & infrastructure.",
+                    official_link: "https://pmksy.gov.in/",
+                    tags: ["Irrigation", "Water"],
+                },
+                {
+                    id: 12,
+                    name: "eNAM (National Agriculture Market)",
+                    short_benefit: "Online trading platform for farmers.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Registered farmers & traders.",
+                    documents: ["Aadhaar", "Bank Details"],
+                    benefits: "Better price discovery & transparent bidding.",
+                    official_link: "https://enam.gov.in/",
+                    tags: ["Market", "Digital"],
+                },
+                {
+                    id: 13,
+                    name: "Kisan Credit Card",
+                    short_benefit: "Short\u2011term crop credit.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "All farmers.",
+                    documents: ["Aadhaar", "Land Records", "Income Proof"],
+                    benefits: "Working capital loan at subsidized interest.",
+                    official_link: "https://www.rbi.org.in/",
+                    tags: ["Credit", "Loan"],
+                },
+                {
+                    id: 14,
+                    name: "National Agriculture Insurance Scheme (NAIS)",
+                    short_benefit: "Crop loss insurance cover.",
+                    location: "Pan\u2011India",
+                    crop: "all notified",
+                    max_land: null,
+                    eligibility: "Farmers cultivating insured crops.",
+                    documents: ["Land Records", "Aadhaar"],
+                    benefits: "Indemnity against yield loss.",
+                    official_link: "https://insurance.gov.in/",
+                    tags: ["Insurance"],
+                },
+                {
+                    id: 15,
+                    name: "Rashtriya Krishi Vikas Yojana",
+                    short_benefit: "State plan scheme for agriculture.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "State agriculture projects.",
+                    documents: ["Project Documents"],
+                    benefits: "Funding support to states for agri development.",
+                    official_link: "https://rkvy.nic.in/",
+                    tags: ["Development", "State Support"],
+                },
+                {
+                    id: 16,
+                    name: "Integrated Scheme on Agriculture Marketing",
+                    short_benefit: "Strengthening APMCs & market info.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "State agencies & farmers.",
+                    documents: ["State Agreement Docs"],
+                    benefits: "Infrastructure & market intelligence.",
+                    official_link: "https://agmarknet.gov.in/",
+                    tags: ["Market", "Infrastructure"],
+                },
+                {
+                    id: 17,
+                    name: "Pradhan Mantri Annadata Aay Sanrakshan Abhiyan",
+                    short_benefit: "Minimum Support Price (MSP) for crops.",
+                    location: "Pan\u2011India",
+                    crop: "wheat,paddy",
+                    max_land: null,
+                    eligibility: "Registered farmers.",
+                    documents: ["Aadhaar", "Sale Receipt"],
+                    benefits: "Assured MSP procurement.",
+                    official_link: "https://dahd.nic.in/",
+                    tags: ["MSP", "Price Support"],
+                },
+                {
+                    id: 18,
+                    name: "Gramin Bhandaran Yojana",
+                    short_benefit: "Storage subsidy for rural warehouses.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Individuals & cooperatives.",
+                    documents: ["Land Records", "Project Report"],
+                    benefits: "Assistance for rural godowns.",
+                    official_link: "https://fcamin.nic.in/",
+                    tags: ["Storage", "Subsidy"],
+                },
+                {
+                    id: 19,
+                    name: "Paramparagat Krishi Vikas Yojana",
+                    short_benefit: "Organic farming support.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Farmer groups & FPOs.",
+                    documents: ["Group Aadhaar", "Land Records"],
+                    benefits: "Cluster\u2011based organic farming assistance.",
+                    official_link: "https://pkvy.nic.in/",
+                    tags: ["Organic", "Sustainable"],
+                },
+                {
+                    id: 20,
+                    name: "National Bee Keeping & Honey Mission",
+                    short_benefit: "Beekeeping promotion & subsidies.",
+                    location: "Pan\u2011India",
+                    crop: "N/A",
+                    max_land: null,
+                    eligibility: "Beekeepers & farmers.",
+                    documents: ["Aadhaar", "Beekeeping Plan"],
+                    benefits: "Equipment subsidy & training.",
+                    official_link: "https://agricoop.nic.in/",
+                    tags: ["Allied Sector", "Subsidy"],
+                },
+                {
+                    id: 21,
+                    name: "Pradhan Mantri Matsya Sampada Yojana",
+                    short_benefit: "Fisheries infra & subsidies.",
+                    location: "Pan\u2011India",
+                    crop: "aquaculture",
+                    max_land: null,
+                    eligibility: "Fish farmers & cooperatives.",
+                    documents: ["Aadhaar", "Project Reports"],
+                    benefits: "Cold chains, feed subsidies.",
+                    official_link: "https://pmmsy.gov.in/",
+                    tags: ["Fisheries", "Allied"],
+                },
+                {
+                    id: 22,
+                    name: "Sub\u2011Mission on Seeds and Planting Material",
+                    short_benefit: "Quality seed subsidy.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Seed producers & farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Assistance for certified seeds.",
+                    official_link: "https://seeds.gov.in/",
+                    tags: ["Seeds", "Quality"],
+                },
+                {
+                    id: 23,
+                    name: "National Horticulture Mission",
+                    short_benefit: "Horti sector support.",
+                    location: "Pan\u2011India",
+                    crop: "horticulture",
+                    max_land: null,
+                    eligibility: "Farmers growing horticultural crops.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Planting material & infrastructure support.",
+                    official_link: "https://hortnet.gov.in/",
+                    tags: ["Horticulture", "Subsidy"],
+                },
+                {
+                    id: 24,
+                    name: "Rashtriya Gokul Mission",
+                    short_benefit: "Indigenous cattle development.",
+                    location: "Pan\u2011India",
+                    crop: "N/A",
+                    max_land: null,
+                    eligibility: "Livestock farmers.",
+                    documents: ["Aadhaar", "Livestock Records"],
+                    benefits: "Breed improvement & support.",
+                    official_link: "https://dahd.nic.in/",
+                    tags: ["Livestock", "Allied"],
+                },
+                {
+                    id: 25,
+                    name: "Dairy Entrepreneurship Development Scheme",
+                    short_benefit: "Subsidy for dairy projects.",
+                    location: "Pan\u2011India",
+                    crop: "N/A",
+                    max_land: null,
+                    eligibility: "Individuals & cooperatives.",
+                    documents: ["Aadhaar", "Project Report"],
+                    benefits: "Interest reimbursement & capital subsidy.",
+                    official_link: "https://www.nddb.coop/",
+                    tags: ["Livestock", "Subsidy"],
+                },
+                {
+                    id: 26,
+                    name: "Pradhan Mantri Kisan Sampada Yojana",
+                    short_benefit: "Agri\u2011food processing support.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Agri processors & farmers groups.",
+                    documents: ["Aadhaar", "Business Plan"],
+                    benefits: "Infrastructure & cold chain support.",
+                    official_link: "https://pmsansadamyajana.gov.in/",
+                    tags: ["Processing", "Infrastructure"],
+                },
+                {
+                    id: 27,
+                    name: "Soil and Land Use Survey of India Assistance",
+                    short_benefit: "Land classification & advisory.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Farmers seeking soil maps.",
+                    documents: ["Aadhaar", "Land Coordinates"],
+                    benefits: "Soil data for precision farming.",
+                    official_link: "https://slusi.dac.gov.in/",
+                    tags: ["Advisory", "Technology"],
+                },
+                {
+                    id: 28,
+                    name: "Agriculture Extension Services",
+                    short_benefit: "Farmer training & extension.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "All farmers.",
+                    documents: ["Aadhaar"],
+                    benefits: "Field visits, training, demos.",
+                    official_link: "https://dac.gov.in/",
+                    tags: ["Training", "Extension"],
+                },
+                {
+                    id: 29,
+                    name: "eKisan Portal Services",
+                    short_benefit: "Digital agri advisory & services.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Registered users.",
+                    documents: ["Aadhaar", "Mobile"],
+                    benefits: "Market info, weather, schemes list.",
+                    official_link: "https://ekisan.gov.in/",
+                    tags: ["Digital", "Advisory"],
+                },
+                {
+                    id: 30,
+                    name: "Jaivik Bharat Organic Certification",
+                    short_benefit: "Organic produce certification.",
+                    location: "Pan\u2011India",
+                    crop: "organic crops",
+                    max_land: null,
+                    eligibility: "Organic farms & FPOs.",
+                    documents: ["Farm Records", "Land Records"],
+                    benefits: "Branding & market access.",
+                    official_link: "https://diragri.gov.in/",
+                    tags: ["Organic", "Certification"],
+                },
+                {
+                    id: 31,
+                    name: "Agri Infrastructure Fund",
+                    short_benefit: "₹1 lakh crore loan support.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "FPOs, startups & agribusiness.",
+                    documents: ["Aadhaar", "Project Reports"],
+                    benefits: "Low\u2011cost loan for infrastructure.",
+                    official_link: "https://agriculture.infrastructure.gov.in/",
+                    tags: ["Credit", "Infrastructure"],
+                },
+                {
+                    id: 32,
+                    name: "Animal Husbandry Infrastructure Development Fund",
+                    short_benefit: "₹15,000 crore support.",
+                    location: "Pan\u2011India",
+                    crop: "N/A",
+                    max_land: null,
+                    eligibility: "Individuals & firms.",
+                    documents: ["Aadhaar", "Project Plan"],
+                    benefits: "Credit for animal farms & units.",
+                    official_link: "https://dahd.nic.in/",
+                    tags: ["Allied", "Infrastructure"],
+                },
+                {
+                    id: 33,
+                    name: "National Mission on Oilseeds & Oil Palm",
+                    short_benefit: "Oilseed crop support.",
+                    location: "Pan\u2011India",
+                    crop: "oilseeds",
+                    max_land: null,
+                    eligibility: "Farmers growing oilseeds.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Seed & input subsidies.",
+                    official_link: "https://oilpalmmission.in/",
+                    tags: ["Crop Support", "Subsidy"],
+                },
+                {
+                    id: 34,
+                    name: "Rainfed Area Development Programme",
+                    short_benefit: "Support for rainfed farming.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Farmers in rainfed zones.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Soil & moisture conservation support.",
+                    official_link: "https://dac.gov.in/",
+                    tags: ["Conservation", "Support"],
+                },
+                {
+                    id: 35,
+                    name: "Varsha Bima \u2013 Weather Insurance",
+                    short_benefit: "Weather index\u2011based insurance.",
+                    location: "Pan\u2011India",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Registered farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Pay\u2011out during drought/flood indices.",
+                    official_link: "https://www.irda.gov.in/",
+                    tags: ["Insurance", "Weather Risk"],
+                },
+                {
+                    id: 36,
+                    name: "Andhra Pradesh YSR Rythu Bharosa",
+                    short_benefit: "₹13,500 per year support.",
+                    location: "Andhra Pradesh",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Farmers with land records.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Annual income support via DBT.",
+                    official_link: "https://ysrrythubharosa.ap.gov.in/",
+                    tags: ["State Scheme", "Income Support"],
+                },
+                {
+                    id: 37,
+                    name: "Krushi Sampada \u2013 Karnataka",
+                    short_benefit: "Agri & horticulture support programs.",
+                    location: "Karnataka",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "All farmers in Karnataka.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Multiple sub\u2011program incentives.",
+                    official_link: "https://krushi.karnataka.gov.in/",
+                    tags: ["State Scheme", "Development"],
+                },
+                {
+                    id: 38,
+                    name: "Maharashtra Jalyukt Shivar Abhiyan",
+                    short_benefit: "Water conservation.",
+                    location: "Maharashtra",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Farmers in drought\u2011prone belts.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Check dams & irrigation support.",
+                    official_link: "https://jalshakti.gov.in/",
+                    tags: ["Water Conservation"],
+                },
+                {
+                    id: 39,
+                    name: "Punjab Crop Diversification Programme",
+                    short_benefit: "Incentives for crop diversification.",
+                    location: "Punjab",
+                    crop: "pulses,sugarcane",
+                    max_land: null,
+                    eligibility: "Punjab farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Subsidies to shift from paddy.",
+                    official_link: "https://agri.punjab.gov.in/",
+                    tags: ["Diversification"],
+                },
+                {
+                    id: 40,
+                    name: "Bihar Mukhyamantri Kisan Yojana",
+                    short_benefit: "State farm support scheme.",
+                    location: "Bihar",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Bihar farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Income & input support.",
+                    official_link: "https://state.bihar.gov.in/",
+                    tags: ["State Scheme"],
+                },
+                {
+                    id: 41,
+                    name: "Kerala Farm Mechanization Scheme",
+                    short_benefit: "Subsidy for equipment.",
+                    location: "Kerala",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Kerala farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Equipment cost support.",
+                    official_link: "https://kerala.gov.in/",
+                    tags: ["Mechanization", "State Scheme"],
+                },
+                {
+                    id: 42,
+                    name: "Odisha Krushi Odisha Scheme",
+                    short_benefit: "Agri investment support.",
+                    location: "Odisha",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Odisha farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Income support & risk cover.",
+                    official_link: "https://agri.odisha.gov.in/",
+                    tags: ["State Scheme"],
+                },
+                {
+                    id: 43,
+                    name: "Haryana State Farmer Investment Support",
+                    short_benefit: "Annual investment support.",
+                    location: "Haryana",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Haryana farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "DBT investment assistance.",
+                    official_link: "https://haryana.gov.in/",
+                    tags: ["State Scheme"],
+                },
+                {
+                    id: 44,
+                    name: "Uttar Pradesh Farmer Investment Support",
+                    short_benefit: "Support per acre.",
+                    location: "Uttar Pradesh",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "UP farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Per acre investment incentive.",
+                    official_link: "https://up.gov.in/",
+                    tags: ["State Scheme"],
+                },
+                {
+                    id: 45,
+                    name: "Madhya Pradesh Krishi Input Subsidy",
+                    short_benefit: "Input cost subsidy.",
+                    location: "Madhya Pradesh",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "MP farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Fertilizer & seed subsidy.",
+                    official_link: "https://mp.gov.in/",
+                    tags: ["State Scheme"],
+                },
+                {
+                    id: 46,
+                    name: "Assam Prani Mitra & Krishi Mitra Scheme",
+                    short_benefit: "Assistance for farming & livestock.",
+                    location: "Assam",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Assam farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Support for crop & animal care.",
+                    official_link: "https://assam.gov.in/",
+                    tags: ["State Scheme"],
+                },
+                {
+                    id: 47,
+                    name: "Goa Agriculture Development Scheme",
+                    short_benefit: "Support for horticulture & agri.",
+                    location: "Goa",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Goa farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Input & market support.",
+                    official_link: "https://goa.gov.in/",
+                    tags: ["State Scheme"],
+                },
+                {
+                    id: 48,
+                    name: "Chhattisgarh Farmer Support Scheme",
+                    short_benefit: "Multi\u2011support for farmers.",
+                    location: "Chhattisgarh",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Chhattisgarh farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Investment & insurance support.",
+                    official_link: "https://chhattisgarh.gov.in/",
+                    tags: ["State Scheme"],
+                },
+                {
+                    id: 49,
+                    name: "Jharkhand Agriculture Support",
+                    short_benefit: "Input subsidy & training.",
+                    location: "Jharkhand",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "Jharkhand farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Seed, fertilizer subsidy & skill training.",
+                    official_link: "https://jharkhand.gov.in/",
+                    tags: ["State Scheme"],
+                },
+                {
+                    id: 50,
+                    name: "Himachal Pradesh Farmer Facilitation Scheme",
+                    short_benefit: "Support for high\u2011altitude farming.",
+                    location: "Himachal Pradesh",
+                    crop: "all",
+                    max_land: null,
+                    eligibility: "HP farmers.",
+                    documents: ["Aadhaar", "Land Records"],
+                    benefits: "Climate & input assistance.",
+                    official_link: "https://himachal.gov.in/",
+                    tags: ["State Scheme"],
+                },
+            ];
+
+            // ── STATE ─────────────────────────────────────────────────────────────────────
+            let currentPage = "intro";
+            let formState = { category: "", ownership: "" };
+
+            // ── PAGE NAV ──────────────────────────────────────────────────────────────────
+            function showPage(page) {
+                document
+                    .querySelectorAll(".page")
+                    .forEach((p) => p.classList.remove("active"));
+                document
+                    .getElementById(
+                        "page" + page.charAt(0).toUpperCase() + page.slice(1),
+                    )
+                    .classList.add("active");
+                document.getElementById("btnBack").style.display =
+                    page === "intro" ? "none" : "flex";
+                currentPage = page;
+                window.scrollTo(0, 0);
+            }
+
+            function goBack() {
+                if (currentPage === "results") showPage("form");
+                else if (currentPage === "form") showPage("intro");
+            }
+
+            // ── PILL SELECTION ────────────────────────────────────────────────────────────
+            function selectPill(group, el, value) {
+                const container = el.parentElement;
+                container
+                    .querySelectorAll(".fpill")
+                    .forEach((p) => p.classList.remove("sel"));
+                el.classList.add("sel");
+                formState[group] = value;
+                document.getElementById(
+                    group === "category" ? "fCategory" : "fOwnership",
+                ).value = value;
+                checkValid();
+            }
+
+            // ── VALIDATION ────────────────────────────────────────────────────────────────
+            function checkValid() {
+                const name = document.getElementById("fName").value.trim();
+                const district = document.getElementById("fDistrict").value;
+                const caste = document.getElementById("fCaste").value;
+                const land = document.getElementById("fLand").value;
+                const crop = document.getElementById("fCrop").value;
+                const soil = document.getElementById("fSoil").value;
+                const water = document.getElementById("fWater").value;
+                const cat = formState.category;
+                const own = formState.ownership;
+                const valid =
+                    name &&
+                    district &&
+                    caste &&
+                    land &&
+                    crop &&
+                    soil &&
+                    water &&
+                    cat &&
+                    own;
+                document.getElementById("btnSubmit").disabled = !valid;
+            }
+
+            // ── FILTER LOGIC ──────────────────────────────────────────────────────────────
+            function filterSchemes(fd) {
+                const landNum = parseFloat(fd.land) || 0;
+                const casteLower = fd.caste.toLowerCase();
+                const waterLower = fd.water.toLowerCase();
+
+                return SCHEMES.filter((scheme) => {
+                    const loc = scheme.location.toLowerCase();
+                    const locationMatch =
+                        loc === "telangana" ||
+                        loc === "pan\u2011india" ||
+                        loc === "pan-india";
+
+                    const schemeCrop = scheme.crop.toLowerCase();
+                    const cropNorm = fd.crop
+                        .toLowerCase()
+                        .replace(/\s*\(.*?\)\s*/g, "")
+                        .trim();
+                    const cropMatch =
+                        schemeCrop === "all" ||
+                        schemeCrop === "n/a" ||
+                        schemeCrop.includes("all") ||
+                        schemeCrop.includes(cropNorm.split(" ")[0]) ||
+                        cropNorm.includes(schemeCrop.split(" ")[0]);
+
+                    const landMatch =
+                        scheme.max_land === null || landNum <= scheme.max_land;
+
+                    const eligText = scheme.eligibility.toLowerCase();
+
+                    const tribalExclusive =
+                        scheme.tags.some((t) =>
+                            t.toLowerCase().includes("tribal"),
+                        ) && !eligText.includes("all");
+                    const tribalMatch =
+                        fd.category === "Tribal" ||
+                        fd.caste === "ST" ||
+                        !tribalExclusive;
+
+                    const scstExclusive =
+                        (eligText.includes("sc/st") ||
+                            eligText.includes(" sc ") ||
+                            eligText.includes(" st ")) &&
+                        !eligText.includes("all");
+                    const casteMatch =
+                        !scstExclusive ||
+                        casteLower === "sc" ||
+                        casteLower === "st" ||
+                        fd.category === "Tribal";
+
+                    const schemeTags = scheme.tags.map((t) => t.toLowerCase());
+                    const isIrrigationScheme = schemeTags.some(
+                        (t) => t.includes("irrigation") || t.includes("water"),
+                    );
+                    const waterMatch =
+                        !isIrrigationScheme || waterLower !== "rainfed";
+
+                    return (
+                        locationMatch &&
+                        cropMatch &&
+                        landMatch &&
+                        tribalMatch &&
+                        casteMatch &&
+                        waterMatch
+                    );
+                });
+            }
+
+            // ── RENDER RESULTS ────────────────────────────────────────────────────────────
+            function findSchemes() {
+                const fd = {
+                    name: document.getElementById("fName").value.trim(),
+                    district: document.getElementById("fDistrict").value,
+                    caste: document.getElementById("fCaste").value,
+                    land: document.getElementById("fLand").value,
+                    crop: document.getElementById("fCrop").value,
+                    soil: document.getElementById("fSoil").value,
+                    water: document.getElementById("fWater").value,
+                    category: formState.category,
+                    ownership: formState.ownership,
+                };
+
+                showPage("results");
+                document.getElementById("resultsSpinner").style.display =
+                    "flex";
+                document.getElementById("resultsContent").style.display =
+                    "none";
+
+                setTimeout(() => {
+                    const matched = filterSchemes(fd);
+                    renderResults(matched, fd);
+                    document.getElementById("resultsSpinner").style.display =
+                        "none";
+                    document.getElementById("resultsContent").style.display =
+                        "block";
+                }, 900);
+            }
+
+            function locBadge(loc) {
+                if (loc === "Telangana")
+                    return `<span class="card-loc loc-ts">🏛 Telangana</span>`;
+                if (loc.toLowerCase().includes("pan"))
+                    return `<span class="card-loc loc-pan">🇮🇳 Pan-India</span>`;
+                return `<span class="card-loc loc-oth">📍 ${loc}</span>`;
+            }
+
+            function renderResults(schemes, fd) {
+                document.getElementById("resultsTitle").textContent =
+                    schemes.length > 0
+                        ? `${schemes.length} Scheme${schemes.length > 1 ? "s" : ""} Found for You`
+                        : "No Matching Schemes";
+
+                const pills = document.getElementById("resultsPills");
+                pills.innerHTML = "";
+                if (schemes.length > 0)
+                    pills.innerHTML += `<span class="r-chip r-chip-green">✓ ${schemes.length} eligible</span>`;
+                [
+                    fd.name,
+                    fd.district,
+                    fd.land + " acres",
+                    fd.category + " Farmer",
+                    fd.caste,
+                    fd.ownership,
+                    "🪨 " + fd.soil,
+                    "💧 " + fd.water,
+                ].forEach((v) => {
+                    pills.innerHTML += `<span class="r-chip">${v}</span>`;
+                });
+
+                const list = document.getElementById("resultsList");
+                if (schemes.length === 0) {
+                    list.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">🌾</div>
+        <h3>No suitable schemes found.</h3>
+        <p>Please adjust your details — try different crop type, land size, or farmer category to discover more schemes.</p>
+      </div>`;
+                    return;
+                }
+
+                list.innerHTML = `<div class="cards">${schemes
+                    .map(
+                        (s, i) => `
+    <div class="card card-anim" style="animation-delay:${i * 0.07}s">
+      <div class="card-head">
+        <div class="card-head-row">
+          <div class="card-name">${s.name}</div>
+          <div class="card-meta">
+            <span class="card-id">Scheme #${s.id}</span>
+            ${locBadge(s.location)}
+          </div>
+        </div>
+        <div class="card-benefit">✦ ${s.short_benefit}</div>
+        <div class="card-tags-row">${s.tags.map((t) => `<span class="card-tag">${t}</span>`).join("")}</div>
+      </div>
+      <div class="card-body">
+        <div class="cf">
+          <div class="cf-label">Crop</div>
+          <div class="cf-val" style="text-transform:capitalize">${s.crop}</div>
+        </div>
+        <div class="cf">
+          <div class="cf-label">Max Land</div>
+          <div class="cf-val">${s.max_land !== null ? s.max_land + " acres" : "No Limit"}</div>
+        </div>
+        <div class="cf span2">
+          <div class="cf-label">Eligibility</div>
+          <div class="cf-val">${s.eligibility}</div>
+        </div>
+        <div class="cf span2">
+          <div class="cf-label">Benefits</div>
+          <div class="cf-val">${s.benefits}</div>
+        </div>
+        ${
+            s.documents && s.documents.length > 0
+                ? `
+        <div class="cf span2">
+          <div class="cf-label">Required Documents</div>
+          <ul class="docs-ul">${s.documents.map((d) => `<li>${d}</li>`).join("")}</ul>
+        </div>`
+                : ""
+        }
+      </div>
+      <div class="card-foot">
+        <a href="${s.official_link}" target="_blank" rel="noopener noreferrer" class="btn-official">
+          View Official Website
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>`,
+                    )
+                    .join("")}</div>`;
+            }
+        </script>
+    </body>
+</html>
