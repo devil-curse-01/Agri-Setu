@@ -1024,8 +1024,8 @@
                     🌱
                     <span data-i18n="introPill">Farming Scheme Finder</span>
                 </div>
-                <h1 class="intro-h1"><i>Agri</i> Setu</h1><br>
-                <p>                                    </p><br>
+                <h1 class="intro-h1"><i>Agri</i> Setu</h1>
+                <br /><br />
                 <p class="intro-sub" data-i18n="introSub">
                     Connecting Telangana Farmers to the Right Government Schemes
                 </p>
@@ -1234,11 +1234,23 @@
                                     id="fLand"
                                     type="number"
                                     min="0"
+                                    max="50"
                                     step="0.5"
                                     placeholder="e.g. 2.5"
                                     data-i18n-placeholder="placeholderLand"
-                                    oninput="checkValid()"
+                                    oninput="checkLand(); checkValid()"
                                 />
+                                <div
+                                    id="landError"
+                                    style="
+                                        color: #c0392b;
+                                        font-size: 0.78rem;
+                                        margin-top: 4px;
+                                        display: none;
+                                    "
+                                >
+                                    ⚠ Maximum land allowed is 50 acres.
+                                </div>
                             </div>
                             <div class="ffield">
                                 <label class="flabel"
@@ -1323,6 +1335,56 @@
                         </div>
                     </div>
 
+                    <!-- Annual Income -->
+                    <div class="fsec">
+                        <div class="fsec-title">
+                            Annual Income
+                            <span class="flabel-req" style="font-size: 0.7rem"
+                                >*</span
+                            >
+                        </div>
+                        <div class="fgrid" style="grid-template-columns: 1fr">
+                            <div class="ffield">
+                                <label class="flabel">
+                                    <span>Annual Family Income (₹)</span>
+                                    <span class="flabel-req">*</span>
+                                </label>
+                                <input
+                                    class="finput"
+                                    id="fIncome"
+                                    type="number"
+                                    min="0"
+                                    step="1000"
+                                    placeholder="e.g. 120000"
+                                    oninput="checkIncome(); checkValid()"
+                                />
+                                <div
+                                    id="incomeHint"
+                                    style="
+                                        color: var(--ink-soft);
+                                        font-size: 0.78rem;
+                                        margin-top: 4px;
+                                    "
+                                >
+                                    💡 Limit: ₹5,00,000 per year. Above this
+                                    limit, most schemes won't apply.
+                                </div>
+                                <div
+                                    id="incomeError"
+                                    style="
+                                        color: #c0392b;
+                                        font-size: 0.78rem;
+                                        margin-top: 4px;
+                                        display: none;
+                                    "
+                                >
+                                    ⚠ Annual income exceeds ₹5,00,000 — you are
+                                    not eligible for these schemes.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Farmer Category -->
                     <div class="fsec">
                         <div class="fsec-title">
@@ -1351,21 +1413,7 @@
                                 onclick="selectPill('category',this,'Tribal')"
                                 data-i18n="pillTribal"
                             >
-                                Tribal
-                            </button>
-                            <button
-                                class="fpill"
-                                onclick="selectPill('category',this,'Landless')"
-                                data-i18n="pillLandless"
-                            >
-                                Landless
-                            </button>
-                            <button
-                                class="fpill"
-                                onclick="selectPill('category',this,'General')"
-                                data-i18n="pillGeneral"
-                            >
-                                General
+                                Large
                             </button>
                         </div>
                         <input type="hidden" id="fCategory" />
@@ -1720,31 +1768,12 @@
             // ── DATA ──────────────────────────────────────────────────────────────────────
             const SCHEMES = [
                 {
-                    id: 1,
-                    name: "Rythu Bandhu Scheme",
-                    short_benefit:
-                        "₹5,000 per acre per season investment support.",
-                    location: "Telangana",
-                    crop: "all",
-                    max_land: 10,
-                    eligibility: "All land\u2011owning farmers in Telangana.",
-                    documents: [
-                        "Aadhaar Card",
-                        "Pattadar Passbook",
-                        "Bank Account Details",
-                    ],
-                    benefits:
-                        "₹10,000 per acre annually (Kharif + Rabi) credited directly to bank accounts.",
-                    official_link: "https://rythubandhu.telangana.gov.in/",
-                    tags: ["Income Support", "DBT", "State Scheme"],
-                },
-                {
                     id: 2,
                     name: "Rythu Bima",
                     short_benefit: "Life insurance cover for farmers.",
                     location: "Telangana",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility:
                         "Farmers aged 18\u201359 yrs registered as landowners.",
                     documents: [
@@ -1790,7 +1819,7 @@
                     short_benefit: "Crop insurance against calamities.",
                     location: "Pan\u2011India",
                     crop: "all notified",
-                    max_land: null,
+                    max_land: 50,
                     eligibility:
                         "Farmers growing notified crops in notified areas.",
                     documents: [
@@ -1809,7 +1838,7 @@
                     short_benefit: "Restoration of irrigation tanks.",
                     location: "Telangana",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "Farmers dependent on tank irrigation.",
                     documents: ["Land Records"],
                     benefits: "Improved water storage capacity.",
@@ -1822,7 +1851,7 @@
                     short_benefit: "Major irrigation infrastructure support.",
                     location: "Telangana",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "Farmers in command areas.",
                     documents: ["Land Records"],
                     benefits: "Assured irrigation water supply.",
@@ -1835,7 +1864,7 @@
                     short_benefit: "Support for rice, pulses, coarse cereals.",
                     location: "Pan\u2011India",
                     crop: "rice,pulses,millets",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "Farmers growing notified crops.",
                     documents: ["Aadhaar", "Land Records"],
                     benefits: "Subsidized seeds & inputs.",
@@ -1848,7 +1877,7 @@
                     short_benefit: "Subsidy on farm machinery.",
                     location: "Pan\u2011India",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "Farmers & FPOs.",
                     documents: ["Aadhaar", "Land Records", "Quotation"],
                     benefits: "40\u201350% subsidy on tractors & implements.",
@@ -1861,7 +1890,7 @@
                     short_benefit: "Free soil testing & nutrient advice.",
                     location: "Pan\u2011India",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "All farmers.",
                     documents: ["Land Records"],
                     benefits: "Soil test reports & fertilizer recommendations.",
@@ -1875,7 +1904,7 @@
                         "Irrigation coverage & water use efficiency.",
                     location: "Pan\u2011India",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "Farmers & communities.",
                     documents: ["Land Records"],
                     benefits:
@@ -1889,7 +1918,7 @@
                     short_benefit: "Online trading platform for farmers.",
                     location: "Pan\u2011India",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "Registered farmers & traders.",
                     documents: ["Aadhaar", "Bank Details"],
                     benefits: "Better price discovery & transparent bidding.",
@@ -1902,7 +1931,7 @@
                     short_benefit: "Short\u2011term crop credit.",
                     location: "Pan\u2011India",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "All farmers.",
                     documents: ["Aadhaar", "Land Records", "Income Proof"],
                     benefits: "Working capital loan at subsidized interest.",
@@ -1915,7 +1944,7 @@
                     short_benefit: "Crop loss insurance cover.",
                     location: "Pan\u2011India",
                     crop: "all notified",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "Farmers cultivating insured crops.",
                     documents: ["Land Records", "Aadhaar"],
                     benefits: "Indemnity against yield loss.",
@@ -1928,7 +1957,7 @@
                     short_benefit: "State plan scheme for agriculture.",
                     location: "Pan\u2011India",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "State agriculture projects.",
                     documents: ["Project Documents"],
                     benefits: "Funding support to states for agri development.",
@@ -1941,7 +1970,7 @@
                     short_benefit: "Strengthening APMCs & market info.",
                     location: "Pan\u2011India",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "State agencies & farmers.",
                     documents: ["State Agreement Docs"],
                     benefits: "Infrastructure & market intelligence.",
@@ -1954,7 +1983,7 @@
                     short_benefit: "Minimum Support Price (MSP) for crops.",
                     location: "Pan\u2011India",
                     crop: "wheat,paddy",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "Registered farmers.",
                     documents: ["Aadhaar", "Sale Receipt"],
                     benefits: "Assured MSP procurement.",
@@ -1967,7 +1996,7 @@
                     short_benefit: "Storage subsidy for rural warehouses.",
                     location: "Pan\u2011India",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "Individuals & cooperatives.",
                     documents: ["Land Records", "Project Report"],
                     benefits: "Assistance for rural godowns.",
@@ -1980,415 +2009,12 @@
                     short_benefit: "Organic farming support.",
                     location: "Pan\u2011India",
                     crop: "all",
-                    max_land: null,
+                    max_land: 50,
                     eligibility: "Farmer groups & FPOs.",
                     documents: ["Group Aadhaar", "Land Records"],
                     benefits: "Cluster\u2011based organic farming assistance.",
                     official_link: "https://pkvy.nic.in/",
                     tags: ["Organic", "Sustainable"],
-                },
-                {
-                    id: 20,
-                    name: "National Bee Keeping & Honey Mission",
-                    short_benefit: "Beekeeping promotion & subsidies.",
-                    location: "Pan\u2011India",
-                    crop: "N/A",
-                    max_land: null,
-                    eligibility: "Beekeepers & farmers.",
-                    documents: ["Aadhaar", "Beekeeping Plan"],
-                    benefits: "Equipment subsidy & training.",
-                    official_link: "https://agricoop.nic.in/",
-                    tags: ["Allied Sector", "Subsidy"],
-                },
-                {
-                    id: 21,
-                    name: "Pradhan Mantri Matsya Sampada Yojana",
-                    short_benefit: "Fisheries infra & subsidies.",
-                    location: "Pan\u2011India",
-                    crop: "aquaculture",
-                    max_land: null,
-                    eligibility: "Fish farmers & cooperatives.",
-                    documents: ["Aadhaar", "Project Reports"],
-                    benefits: "Cold chains, feed subsidies.",
-                    official_link: "https://pmmsy.gov.in/",
-                    tags: ["Fisheries", "Allied"],
-                },
-                {
-                    id: 22,
-                    name: "Sub\u2011Mission on Seeds and Planting Material",
-                    short_benefit: "Quality seed subsidy.",
-                    location: "Pan\u2011India",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Seed producers & farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Assistance for certified seeds.",
-                    official_link: "https://seeds.gov.in/",
-                    tags: ["Seeds", "Quality"],
-                },
-                {
-                    id: 23,
-                    name: "National Horticulture Mission",
-                    short_benefit: "Horti sector support.",
-                    location: "Pan\u2011India",
-                    crop: "horticulture",
-                    max_land: null,
-                    eligibility: "Farmers growing horticultural crops.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Planting material & infrastructure support.",
-                    official_link: "https://hortnet.gov.in/",
-                    tags: ["Horticulture", "Subsidy"],
-                },
-                {
-                    id: 24,
-                    name: "Rashtriya Gokul Mission",
-                    short_benefit: "Indigenous cattle development.",
-                    location: "Pan\u2011India",
-                    crop: "N/A",
-                    max_land: null,
-                    eligibility: "Livestock farmers.",
-                    documents: ["Aadhaar", "Livestock Records"],
-                    benefits: "Breed improvement & support.",
-                    official_link: "https://dahd.nic.in/",
-                    tags: ["Livestock", "Allied"],
-                },
-                {
-                    id: 25,
-                    name: "Dairy Entrepreneurship Development Scheme",
-                    short_benefit: "Subsidy for dairy projects.",
-                    location: "Pan\u2011India",
-                    crop: "N/A",
-                    max_land: null,
-                    eligibility: "Individuals & cooperatives.",
-                    documents: ["Aadhaar", "Project Report"],
-                    benefits: "Interest reimbursement & capital subsidy.",
-                    official_link: "https://www.nddb.coop/",
-                    tags: ["Livestock", "Subsidy"],
-                },
-                {
-                    id: 26,
-                    name: "Pradhan Mantri Kisan Sampada Yojana",
-                    short_benefit: "Agri\u2011food processing support.",
-                    location: "Pan\u2011India",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Agri processors & farmers groups.",
-                    documents: ["Aadhaar", "Business Plan"],
-                    benefits: "Infrastructure & cold chain support.",
-                    official_link: "https://pmsansadamyajana.gov.in/",
-                    tags: ["Processing", "Infrastructure"],
-                },
-                {
-                    id: 27,
-                    name: "Soil and Land Use Survey of India Assistance",
-                    short_benefit: "Land classification & advisory.",
-                    location: "Pan\u2011India",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Farmers seeking soil maps.",
-                    documents: ["Aadhaar", "Land Coordinates"],
-                    benefits: "Soil data for precision farming.",
-                    official_link: "https://slusi.dac.gov.in/",
-                    tags: ["Advisory", "Technology"],
-                },
-                {
-                    id: 28,
-                    name: "Agriculture Extension Services",
-                    short_benefit: "Farmer training & extension.",
-                    location: "Pan\u2011India",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "All farmers.",
-                    documents: ["Aadhaar"],
-                    benefits: "Field visits, training, demos.",
-                    official_link: "https://dac.gov.in/",
-                    tags: ["Training", "Extension"],
-                },
-                {
-                    id: 29,
-                    name: "eKisan Portal Services",
-                    short_benefit: "Digital agri advisory & services.",
-                    location: "Pan\u2011India",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Registered users.",
-                    documents: ["Aadhaar", "Mobile"],
-                    benefits: "Market info, weather, schemes list.",
-                    official_link: "https://ekisan.gov.in/",
-                    tags: ["Digital", "Advisory"],
-                },
-                {
-                    id: 30,
-                    name: "Jaivik Bharat Organic Certification",
-                    short_benefit: "Organic produce certification.",
-                    location: "Pan\u2011India",
-                    crop: "organic crops",
-                    max_land: null,
-                    eligibility: "Organic farms & FPOs.",
-                    documents: ["Farm Records", "Land Records"],
-                    benefits: "Branding & market access.",
-                    official_link: "https://diragri.gov.in/",
-                    tags: ["Organic", "Certification"],
-                },
-                {
-                    id: 31,
-                    name: "Agri Infrastructure Fund",
-                    short_benefit: "₹1 lakh crore loan support.",
-                    location: "Pan\u2011India",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "FPOs, startups & agribusiness.",
-                    documents: ["Aadhaar", "Project Reports"],
-                    benefits: "Low\u2011cost loan for infrastructure.",
-                    official_link: "https://agriculture.infrastructure.gov.in/",
-                    tags: ["Credit", "Infrastructure"],
-                },
-                {
-                    id: 32,
-                    name: "Animal Husbandry Infrastructure Development Fund",
-                    short_benefit: "₹15,000 crore support.",
-                    location: "Pan\u2011India",
-                    crop: "N/A",
-                    max_land: null,
-                    eligibility: "Individuals & firms.",
-                    documents: ["Aadhaar", "Project Plan"],
-                    benefits: "Credit for animal farms & units.",
-                    official_link: "https://dahd.nic.in/",
-                    tags: ["Allied", "Infrastructure"],
-                },
-                {
-                    id: 33,
-                    name: "National Mission on Oilseeds & Oil Palm",
-                    short_benefit: "Oilseed crop support.",
-                    location: "Pan\u2011India",
-                    crop: "oilseeds",
-                    max_land: null,
-                    eligibility: "Farmers growing oilseeds.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Seed & input subsidies.",
-                    official_link: "https://oilpalmmission.in/",
-                    tags: ["Crop Support", "Subsidy"],
-                },
-                {
-                    id: 34,
-                    name: "Rainfed Area Development Programme",
-                    short_benefit: "Support for rainfed farming.",
-                    location: "Pan\u2011India",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Farmers in rainfed zones.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Soil & moisture conservation support.",
-                    official_link: "https://dac.gov.in/",
-                    tags: ["Conservation", "Support"],
-                },
-                {
-                    id: 35,
-                    name: "Varsha Bima \u2013 Weather Insurance",
-                    short_benefit: "Weather index\u2011based insurance.",
-                    location: "Pan\u2011India",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Registered farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Pay\u2011out during drought/flood indices.",
-                    official_link: "https://www.irda.gov.in/",
-                    tags: ["Insurance", "Weather Risk"],
-                },
-                {
-                    id: 36,
-                    name: "Andhra Pradesh YSR Rythu Bharosa",
-                    short_benefit: "₹13,500 per year support.",
-                    location: "Andhra Pradesh",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Farmers with land records.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Annual income support via DBT.",
-                    official_link: "https://ysrrythubharosa.ap.gov.in/",
-                    tags: ["State Scheme", "Income Support"],
-                },
-                {
-                    id: 37,
-                    name: "Krushi Sampada \u2013 Karnataka",
-                    short_benefit: "Agri & horticulture support programs.",
-                    location: "Karnataka",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "All farmers in Karnataka.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Multiple sub\u2011program incentives.",
-                    official_link: "https://krushi.karnataka.gov.in/",
-                    tags: ["State Scheme", "Development"],
-                },
-                {
-                    id: 38,
-                    name: "Maharashtra Jalyukt Shivar Abhiyan",
-                    short_benefit: "Water conservation.",
-                    location: "Maharashtra",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Farmers in drought\u2011prone belts.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Check dams & irrigation support.",
-                    official_link: "https://jalshakti.gov.in/",
-                    tags: ["Water Conservation"],
-                },
-                {
-                    id: 39,
-                    name: "Punjab Crop Diversification Programme",
-                    short_benefit: "Incentives for crop diversification.",
-                    location: "Punjab",
-                    crop: "pulses,sugarcane",
-                    max_land: null,
-                    eligibility: "Punjab farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Subsidies to shift from paddy.",
-                    official_link: "https://agri.punjab.gov.in/",
-                    tags: ["Diversification"],
-                },
-                {
-                    id: 40,
-                    name: "Bihar Mukhyamantri Kisan Yojana",
-                    short_benefit: "State farm support scheme.",
-                    location: "Bihar",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Bihar farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Income & input support.",
-                    official_link: "https://state.bihar.gov.in/",
-                    tags: ["State Scheme"],
-                },
-                {
-                    id: 41,
-                    name: "Kerala Farm Mechanization Scheme",
-                    short_benefit: "Subsidy for equipment.",
-                    location: "Kerala",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Kerala farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Equipment cost support.",
-                    official_link: "https://kerala.gov.in/",
-                    tags: ["Mechanization", "State Scheme"],
-                },
-                {
-                    id: 42,
-                    name: "Odisha Krushi Odisha Scheme",
-                    short_benefit: "Agri investment support.",
-                    location: "Odisha",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Odisha farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Income support & risk cover.",
-                    official_link: "https://agri.odisha.gov.in/",
-                    tags: ["State Scheme"],
-                },
-                {
-                    id: 43,
-                    name: "Haryana State Farmer Investment Support",
-                    short_benefit: "Annual investment support.",
-                    location: "Haryana",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Haryana farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "DBT investment assistance.",
-                    official_link: "https://haryana.gov.in/",
-                    tags: ["State Scheme"],
-                },
-                {
-                    id: 44,
-                    name: "Uttar Pradesh Farmer Investment Support",
-                    short_benefit: "Support per acre.",
-                    location: "Uttar Pradesh",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "UP farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Per acre investment incentive.",
-                    official_link: "https://up.gov.in/",
-                    tags: ["State Scheme"],
-                },
-                {
-                    id: 45,
-                    name: "Madhya Pradesh Krishi Input Subsidy",
-                    short_benefit: "Input cost subsidy.",
-                    location: "Madhya Pradesh",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "MP farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Fertilizer & seed subsidy.",
-                    official_link: "https://mp.gov.in/",
-                    tags: ["State Scheme"],
-                },
-                {
-                    id: 46,
-                    name: "Assam Prani Mitra & Krishi Mitra Scheme",
-                    short_benefit: "Assistance for farming & livestock.",
-                    location: "Assam",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Assam farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Support for crop & animal care.",
-                    official_link: "https://assam.gov.in/",
-                    tags: ["State Scheme"],
-                },
-                {
-                    id: 47,
-                    name: "Goa Agriculture Development Scheme",
-                    short_benefit: "Support for horticulture & agri.",
-                    location: "Goa",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Goa farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Input & market support.",
-                    official_link: "https://goa.gov.in/",
-                    tags: ["State Scheme"],
-                },
-                {
-                    id: 48,
-                    name: "Chhattisgarh Farmer Support Scheme",
-                    short_benefit: "Multi\u2011support for farmers.",
-                    location: "Chhattisgarh",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Chhattisgarh farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Investment & insurance support.",
-                    official_link: "https://chhattisgarh.gov.in/",
-                    tags: ["State Scheme"],
-                },
-                {
-                    id: 49,
-                    name: "Jharkhand Agriculture Support",
-                    short_benefit: "Input subsidy & training.",
-                    location: "Jharkhand",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "Jharkhand farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Seed, fertilizer subsidy & skill training.",
-                    official_link: "https://jharkhand.gov.in/",
-                    tags: ["State Scheme"],
-                },
-                {
-                    id: 50,
-                    name: "Himachal Pradesh Farmer Facilitation Scheme",
-                    short_benefit: "Support for high\u2011altitude farming.",
-                    location: "Himachal Pradesh",
-                    crop: "all",
-                    max_land: null,
-                    eligibility: "HP farmers.",
-                    documents: ["Aadhaar", "Land Records"],
-                    benefits: "Climate & input assistance.",
-                    official_link: "https://himachal.gov.in/",
-                    tags: ["State Scheme"],
                 },
             ];
 
@@ -2431,6 +2057,41 @@
                 checkValid();
             }
 
+            // ── LAND VALIDATION ───────────────────────────────────────────────────────────
+            function checkLand() {
+                const landVal = parseFloat(
+                    document.getElementById("fLand").value,
+                );
+                const err = document.getElementById("landError");
+                if (landVal > 50) {
+                    err.style.display = "block";
+                    document.getElementById("fLand").style.borderColor =
+                        "#c0392b";
+                } else {
+                    err.style.display = "none";
+                    document.getElementById("fLand").style.borderColor = "";
+                }
+            }
+
+            // ── INCOME VALIDATION ─────────────────────────────────────────────────────────
+            function checkIncome() {
+                const incomeVal = parseFloat(
+                    document.getElementById("fIncome").value,
+                );
+                const err = document.getElementById("incomeError");
+                const hint = document.getElementById("incomeHint");
+                if (incomeVal > 500000) {
+                    err.style.display = "block";
+                    hint.style.display = "none";
+                    document.getElementById("fIncome").style.borderColor =
+                        "#c0392b";
+                } else {
+                    err.style.display = "none";
+                    hint.style.display = "block";
+                    document.getElementById("fIncome").style.borderColor = "";
+                }
+            }
+
             // ── VALIDATION ────────────────────────────────────────────────────────────────
             function checkValid() {
                 const name = document.getElementById("fName").value.trim();
@@ -2440,6 +2101,7 @@
                 const crop = document.getElementById("fCrop").value;
                 const soil = document.getElementById("fSoil").value;
                 const water = document.getElementById("fWater").value;
+                const income = document.getElementById("fIncome").value;
                 const cat = formState.category;
                 const own = formState.ownership;
                 const valid =
@@ -2447,9 +2109,12 @@
                     district &&
                     caste &&
                     land &&
+                    parseFloat(land) <= 50 &&
                     crop &&
                     soil &&
                     water &&
+                    income &&
+                    parseFloat(income) <= 500000 &&
                     cat &&
                     own;
                 document.getElementById("btnSubmit").disabled = !valid;
@@ -2535,6 +2200,7 @@
                     crop: document.getElementById("fCrop").value,
                     soil: document.getElementById("fSoil").value,
                     water: document.getElementById("fWater").value,
+                    income: document.getElementById("fIncome").value,
                     category: formState.category,
                     ownership: formState.ownership,
                 };
@@ -2550,7 +2216,14 @@
                     "none";
 
                 setTimeout(() => {
-                    const matched = filterSchemes(fd);
+                    let matched = filterSchemes(fd);
+                    // Shuffle and pick a random number between 5 and 10
+                    matched = matched.sort(() => Math.random() - 0.5);
+                    const count = Math.min(
+                        matched.length,
+                        Math.floor(Math.random() * 6) + 5,
+                    ); // 5 to 10
+                    matched = matched.slice(0, count);
                     renderResults(matched, fd);
                     document.getElementById("resultsSpinner").style.display =
                         "none";
@@ -2584,6 +2257,7 @@
                     fd.category + " " + t("farmerSuffix"),
                     fd.caste,
                     fd.ownership,
+                    "💰 ₹" + Number(fd.income).toLocaleString("en-IN"),
                     "🪨 " + fd.soil,
                     "💧 " + fd.water,
                 ].forEach((v) => {
@@ -2624,7 +2298,7 @@
         </div>
         <div class="cf">
           <div class="cf-label">${t("cfMaxLand")}</div>
-          <div class="cf-val">${s.max_land !== null ? s.max_land + " " + t("acres") : t("cfNoLimit")}</div>
+          <div class="cf-val">${s.max_land + " " + t("acres")}</div>
         </div>
         <div class="cf span2">
           <div class="cf-label">${t("cfEligibility")}</div>
@@ -2703,6 +2377,352 @@
                 if (e.key === "Escape") closeModal();
             });
 
+            function getSchemeSpecificSteps(scheme) {
+                const name = scheme.name;
+                const docs = scheme.documents.join(", ");
+                const link = scheme.official_link;
+                const tags = (scheme.tags || [])
+                    .map((t) => t.toLowerCase())
+                    .join(" ");
+
+                // Insurance schemes
+                if (
+                    tags.includes("insurance") ||
+                    name.toLowerCase().includes("insurance") ||
+                    name.toLowerCase().includes("fasal bima") ||
+                    name.toLowerCase().includes("bima")
+                ) {
+                    return {
+                        steps: [
+                            {
+                                title: "Gather Your Crop & Land Documents",
+                                desc: `Collect your land records (patta/passbook), ${docs}, and details of the crop you have sown including sowing date and area under cultivation.`,
+                            },
+                            {
+                                title: "Contact Your Bank or Insurance Agent",
+                                desc: `Visit the bank where you hold your Kisan Credit Card (KCC) or the nearest insurance company agent authorised under ${name}. Loanee farmers are enrolled automatically; non-loanee farmers must apply voluntarily.`,
+                            },
+                            {
+                                title: "Fill the Crop Insurance Proposal Form",
+                                desc: `Complete the proposal form with accurate details of your crop type, variety, sowing date, irrigated/rainfed status, and bank account number. Any mismatch can lead to claim rejection.`,
+                            },
+                            {
+                                title: "Pay the Farmer-Share Premium",
+                                desc: `Pay your portion of the insurance premium (typically 1.5–5% of sum insured depending on crop season). Keep the premium receipt and policy document safely.`,
+                            },
+                            {
+                                title: "Report Crop Loss Within 72 Hours",
+                                desc: `In case of crop damage due to flood, drought, pest, or other notified risks, immediately inform your bank, insurance company, or local agriculture officer within 72 hours of the event.`,
+                            },
+                            {
+                                title: "Track Your Claim Online",
+                                desc: `Visit ${link} or the insurer's portal to track your claim status using your policy number. Ensure your Aadhaar-linked bank account details are correct for direct benefit transfer.`,
+                            },
+                        ],
+                        tip: `Enroll before the cut-off date (usually 1–2 weeks before sowing season ends). Late enrollment is not permitted under ${name}.`,
+                    };
+                }
+
+                // Income / Direct Benefit Transfer schemes (PM-KISAN type)
+                if (
+                    tags.includes("income") ||
+                    name.toLowerCase().includes("kisan samman") ||
+                    name.toLowerCase().includes("pm-kisan") ||
+                    name.toLowerCase().includes("rythu bandhu")
+                ) {
+                    return {
+                        steps: [
+                            {
+                                title: "Check Your Eligibility First",
+                                desc: `Confirm you meet the eligibility criteria: ${scheme.eligibility}. Institutional landholders, government employees, and income-tax payers are typically excluded.`,
+                            },
+                            {
+                                title: "Gather Required Documents",
+                                desc: `Keep ready your ${docs} — ensure your land records are in your name and your bank account is Aadhaar-seeded.`,
+                            },
+                            {
+                                title: "Register at Agriculture Office or Online",
+                                desc: `Visit your Village Revenue Officer (VRO), Agriculture Extension Officer, or the official portal at ${link}. For PM-KISAN, self-registration is available at pmkisan.gov.in.`,
+                            },
+                            {
+                                title: "Submit Completed Application Form",
+                                desc: `Fill the registration form with Aadhaar number, land holding details, bank account (IFSC & account number), and mobile number. Double-check all entries before submitting.`,
+                            },
+                            {
+                                title: "Verify Aadhaar-Bank Linkage",
+                                desc: `Ensure your Aadhaar is linked to your bank account. Visit your bank branch or use NPCI mapper to verify. Payments are made only to Aadhaar-seeded accounts.`,
+                            },
+                            {
+                                title: "Track Beneficiary Status Online",
+                                desc: `Check your beneficiary status on the official portal ${link} using your Aadhaar or registration number. Payments are transferred directly to your bank in instalments.`,
+                            },
+                        ],
+                        tip: `If your name does not appear in the beneficiary list despite registration, contact your local Patwari or Agriculture Department to correct any land record mismatch.`,
+                    };
+                }
+
+                // Credit / Loan schemes (KCC, bank loans)
+                if (
+                    tags.includes("credit") ||
+                    tags.includes("loan") ||
+                    name.toLowerCase().includes("kisan credit") ||
+                    name.toLowerCase().includes("credit card")
+                ) {
+                    return {
+                        steps: [
+                            {
+                                title: "Approach Your Nearest Bank Branch",
+                                desc: `Visit a nationalized bank (SBI, Canara Bank, etc.), cooperative bank, or RRB near you. Ask specifically for the ${name} application form.`,
+                            },
+                            {
+                                title: "Collect and Complete the Application",
+                                desc: `Fill in details of your land holding, crops planned, estimated production cost, and income. Attach all required documents: ${docs}.`,
+                            },
+                            {
+                                title: "Submit to Bank Manager for Appraisal",
+                                desc: `Submit the completed form with documents to the bank manager. The bank will assess your creditworthiness, land ownership, and crop production plan.`,
+                            },
+                            {
+                                title: "Complete Field Verification",
+                                desc: `Bank officials may visit your farm to verify land details and suitability. Cooperate and provide all information honestly during the inspection.`,
+                            },
+                            {
+                                title: "Receive Credit Card and Passbook",
+                                desc: `After approval, you will receive a ${name} card and passbook with your credit limit (based on crop production costs + contingency expenses). This limit is typically renewed annually.`,
+                            },
+                            {
+                                title: "Use and Repay Timely",
+                                desc: `Withdraw money as needed from ATM or bank counter for farm inputs. Ensure repayment within the crop season (usually within 12 months) to maintain your credit limit and benefit from low interest rates.`,
+                            },
+                        ],
+                        tip: `Timely repayment keeps your interest rate as low as 4% per annum under the Interest Subvention Scheme. Defaulting removes this benefit.`,
+                    };
+                }
+
+                // Soil Health / Testing
+                if (
+                    tags.includes("soil") ||
+                    name.toLowerCase().includes("soil health")
+                ) {
+                    return {
+                        steps: [
+                            {
+                                title: "Collect Soil Sample From Your Field",
+                                desc: `Collect soil from 8–10 spots in your field at 15–20 cm depth in a zigzag pattern. Mix all samples together, dry in shade, and keep about 500 grams as your composite sample.`,
+                            },
+                            {
+                                title: "Visit Nearest Soil Testing Lab",
+                                desc: `Take your soil sample to the government Soil Testing Laboratory or the Krishi Vigyan Kendra (KVK). Carry your ${docs} for farmer registration.`,
+                            },
+                            {
+                                title: "Register and Submit Sample",
+                                desc: `Register as a farmer at the lab counter, fill the sample submission form with your name, land location, crop grown, and irrigation details. Submit sample for analysis.`,
+                            },
+                            {
+                                title: "Receive Your Soil Health Card",
+                                desc: `Within 2–4 weeks, collect your printed Soil Health Card. It will show macro and micro-nutrient levels along with pH and organic carbon content of your soil.`,
+                            },
+                            {
+                                title: "Follow Fertilizer Recommendations",
+                                desc: `The card includes crop-specific fertilizer recommendations. Apply the suggested quantities of NPK and micronutrients to avoid over- or under-fertilization and save input costs.`,
+                            },
+                            {
+                                title: "Renew Every 2 Years",
+                                desc: `Soil health should be re-tested every 2 years. Visit ${link} to download digital copies of your Soil Health Card or check past results.`,
+                            },
+                        ],
+                        tip: `Collect samples before sowing, not after applying fertilizers, for accurate results. Early morning sampling is best.`,
+                    };
+                }
+
+                // Irrigation / Water schemes
+                if (
+                    tags.includes("irrigation") ||
+                    tags.includes("water") ||
+                    name.toLowerCase().includes("irrigation") ||
+                    name.toLowerCase().includes("sinchai") ||
+                    name.toLowerCase().includes("drip") ||
+                    name.toLowerCase().includes("sprinkler")
+                ) {
+                    return {
+                        steps: [
+                            {
+                                title: "Check Eligibility and Scheme Component",
+                                desc: `Confirm your eligibility: ${scheme.eligibility}. Identify which component applies to you — drip/sprinkler subsidy, canal water access, or infrastructure support.`,
+                            },
+                            {
+                                title: "Gather Documents and Land Details",
+                                desc: `Collect ${docs}. Prepare a sketch/map of your field showing water source location, proposed pipeline route, or area to be irrigated.`,
+                            },
+                            {
+                                title: "Approach Agriculture or Irrigation Department",
+                                desc: `Visit your District Agriculture Office, Irrigation Department office, or apply online at ${link}. Obtain the prescribed application form for ${name}.`,
+                            },
+                            {
+                                title: "Get Approved Supplier/Vendor Quotation",
+                                desc: `For equipment subsidy (drip/sprinkler), obtain a quotation from an approved manufacturer/dealer registered under the scheme. Unapproved vendors will not be eligible for subsidy.`,
+                            },
+                            {
+                                title: "Submit Application With Technical Approval",
+                                desc: `Submit your application with field sketch, quotation, and documents. A field inspection by a Junior Engineer or Agriculture Officer will verify the technical suitability.`,
+                            },
+                            {
+                                title: "Install System and Claim Subsidy",
+                                desc: `After approval, install the system through the approved vendor. Submit installation certificate and photos to the department. Subsidy will be credited to your bank account directly.`,
+                            },
+                        ],
+                        tip: `Choose drip or micro-irrigation systems — they qualify for higher subsidy (up to 55% for small/marginal farmers) and save up to 40% water compared to flood irrigation.`,
+                    };
+                }
+
+                // Seeds / Mechanization / Subsidy on inputs
+                if (
+                    tags.includes("seeds") ||
+                    tags.includes("mechanization") ||
+                    tags.includes("subsidy") ||
+                    name.toLowerCase().includes("mechanization") ||
+                    name.toLowerCase().includes("seed")
+                ) {
+                    return {
+                        steps: [
+                            {
+                                title: "Visit Agriculture Extension Office",
+                                desc: `Contact your local Agriculture Extension Officer (AEO) or Assistant Director of Agriculture (ADA) to confirm the availability of ${name} benefits in your area for the current season.`,
+                            },
+                            {
+                                title: "Prepare and Submit Application",
+                                desc: `Fill the application form for ${name} with your personal details, Aadhaar, land records (${docs}), and specifics of the equipment/seeds you require.`,
+                            },
+                            {
+                                title: "Obtain Quotation From Registered Dealer",
+                                desc: `For machinery or equipment, get a quotation from an empanelled/approved dealer. Seeds must be procured from government-authorised seed distribution centres or certified dealers.`,
+                            },
+                            {
+                                title: "Await Field Inspection and Approval",
+                                desc: `Department officials will inspect your farm and verify the application. Approval is typically processed within 15–30 working days. You'll be notified via SMS on your registered mobile.`,
+                            },
+                            {
+                                title: "Purchase With Subsidy Deducted Upfront",
+                                desc: `In many schemes, the subsidy is deducted at point of purchase — you pay only the farmer's share. Collect the official receipt and keep all documents for future reference.`,
+                            },
+                            {
+                                title: "Complete Post-Purchase Verification",
+                                desc: `After purchase, inform your AEO and allow a post-verification visit if required. Retain purchase receipts — subsidy reversal may occur if verification fails.`,
+                            },
+                        ],
+                        tip: `Apply early in the season — budgets are limited and benefits are distributed on a first-come, first-served basis within district allocations.`,
+                    };
+                }
+
+                // Market / Price support schemes
+                if (
+                    tags.includes("msp") ||
+                    tags.includes("market") ||
+                    tags.includes("price support") ||
+                    name.toLowerCase().includes("msp") ||
+                    name.toLowerCase().includes("market") ||
+                    name.toLowerCase().includes("enam")
+                ) {
+                    return {
+                        steps: [
+                            {
+                                title: "Register as a Farmer/Seller",
+                                desc: `Register yourself on the relevant portal — ${link}. For eNAM, visit your nearest APMC mandi. For MSP schemes, register at the local procurement agency (like NAFED, FCI, or state agency).`,
+                            },
+                            {
+                                title: "Gather Required Documents",
+                                desc: `Keep ${docs} ready. For MSP procurement you'll also need a mobile number linked to Aadhaar and a bank account number for payment.`,
+                            },
+                            {
+                                title: "Know Your Crop's MSP / Market Price",
+                                desc: `Check the current MSP or market price for your crop on ${link}. Prices are announced before each season — plan your sale accordingly to maximise returns.`,
+                            },
+                            {
+                                title: "Transport Produce to Mandi / Procurement Centre",
+                                desc: `Bring your harvested and cleaned produce to the designated mandi or procurement centre on the scheduled date. Ensure produce meets minimum quality/moisture standards to avoid rejection.`,
+                            },
+                            {
+                                title: "Complete Weighing and Sale",
+                                desc: `Your produce will be weighed, graded, and a sale slip issued. For MSP procurement, a token is generated. For eNAM, electronic bidding happens and the highest bid is accepted.`,
+                            },
+                            {
+                                title: "Receive Payment Directly to Bank",
+                                desc: `Payment is credited within 24–72 hours directly to your registered bank account. Track status on the portal using your sale slip or token number.`,
+                            },
+                        ],
+                        tip: `Clean, dry, and sort your produce before reaching the mandi — good quality lots fetch better bids on eNAM and pass MSP quality norms without rejection.`,
+                    };
+                }
+
+                // Development / Infrastructure / State support
+                if (
+                    tags.includes("development") ||
+                    tags.includes("infrastructure") ||
+                    tags.includes("state support")
+                ) {
+                    return {
+                        steps: [
+                            {
+                                title: "Identify Relevant Component/Activity",
+                                desc: `${name} supports multiple activities. Identify the component relevant to you — farm pond, horticulture, post-harvest, FPO formation, etc. Consult your block Agriculture Officer for guidance.`,
+                            },
+                            {
+                                title: "Prepare Project/Activity Proposal",
+                                desc: `Prepare a brief proposal describing your activity, estimated cost, land details, and expected outcome. Collect required documents: ${docs}.`,
+                            },
+                            {
+                                title: "Submit Application to District Agriculture Department",
+                                desc: `Submit your application at the District Agriculture Office or through the online portal ${link}. Applications are reviewed at district and state level.`,
+                            },
+                            {
+                                title: "Attend Technical Scrutiny and Field Visit",
+                                desc: `A technical committee will scrutinize your proposal. Be present during the field visit and provide all requested information clearly.`,
+                            },
+                            {
+                                title: "Receive Sanction and Start Activity",
+                                desc: `On approval, you will receive a sanction order specifying the subsidy/grant amount and activity timeline. Begin the activity only after receiving the sanction letter.`,
+                            },
+                            {
+                                title: "Submit Completion Report for Release of Funds",
+                                desc: `After completing the activity, submit a completion report with photographs and bills to the district office. Remaining funds are released after verification.`,
+                            },
+                        ],
+                        tip: `Form a Farmer Producer Organisation (FPO) to access higher funding limits and collective bargaining benefits under ${name}.`,
+                    };
+                }
+
+                // Generic fallback — scheme-aware but works for any scheme
+                return {
+                    steps: [
+                        {
+                            title: "Verify Your Eligibility Clearly",
+                            desc: `Confirm you meet all conditions: ${scheme.eligibility}. Contact your local Agriculture Extension Officer (AEO) if you're unsure whether you qualify.`,
+                        },
+                        {
+                            title: "Collect All Required Documents",
+                            desc: `Gather your ${docs}. Ensure all documents are current, attested where necessary, and that your Aadhaar number is linked to your bank account.`,
+                        },
+                        {
+                            title: "Visit Agriculture Office or Apply Online",
+                            desc: `Go to your District Agriculture Office, Common Service Centre (CSC), or visit the official website at ${link} to obtain and fill the application form for ${name}.`,
+                        },
+                        {
+                            title: "Fill the Application Accurately",
+                            desc: `Provide correct personal details, land holding information, Aadhaar number, bank account (with IFSC code), and crop details. Any mismatch may delay or reject your application.`,
+                        },
+                        {
+                            title: "Attach Documents and Submit",
+                            desc: `Attach self-attested copies of all required documents to the filled application form. Submit at the designated counter and collect an acknowledgement receipt with a reference number.`,
+                        },
+                        {
+                            title: "Track Application and Receive Benefits",
+                            desc: `Use your reference number to track your application status on ${link} or by calling your local Agriculture Office. Benefits are transferred directly to your bank account once approved.`,
+                        },
+                    ],
+                    tip: `Keep photocopies of all submitted documents and the acknowledgement slip. Carry originals during any verification visit by government officials.`,
+                };
+            }
+
             async function generateSteps(scheme) {
                 const prompt = `You are an expert on Indian government agricultural schemes. A farmer wants to apply for the "${scheme.name}" scheme.
 
@@ -2735,7 +2755,7 @@ Respond ONLY in this exact JSON format, no markdown, no extra text:
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
-                                model: "claude-sonnet-4-20250514",
+                                model: "claude-sonnet-4-5",
                                 max_tokens: 1000,
                                 messages: [{ role: "user", content: prompt }],
                             }),
@@ -2743,6 +2763,7 @@ Respond ONLY in this exact JSON format, no markdown, no extra text:
                     );
 
                     const data = await res.json();
+                    if (data.error) throw new Error(data.error.message);
                     const raw = data.content
                         .map((b) => b.text || "")
                         .join("")
@@ -2751,19 +2772,9 @@ Respond ONLY in this exact JSON format, no markdown, no extra text:
                     const parsed = JSON.parse(clean);
                     renderSteps(parsed);
                 } catch (err) {
-                    document.getElementById("modalBody").innerHTML = `
-      <div class="modal-error">
-        <div class="modal-error-icon">📋</div>
-        <p>Here are the general steps to apply for <strong>${scheme.name}</strong>:<br><br>
-        1. Gather required documents: <strong>${scheme.documents.join(", ")}</strong><br>
-        2. Visit your nearest Agricultural Extension Office or Common Service Centre (CSC)<br>
-        3. Request the application form for ${scheme.name}<br>
-        4. Fill in your personal, land, and bank details accurately<br>
-        5. Attach all required documents and submit the form<br>
-        6. Collect your acknowledgement slip and track status online<br><br>
-        For full details, visit the <a href="${scheme.official_link}" target="_blank" style="color:var(--green);font-weight:600">official website ↗</a></p>
-      </div>`;
-                    document.getElementById("modalFoot").style.display = "flex";
+                    // Generate scheme-specific fallback steps
+                    const fallback = getSchemeSpecificSteps(scheme);
+                    renderSteps(fallback);
                 }
             }
 
